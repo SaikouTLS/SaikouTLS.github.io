@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAMUEL.EXE — PORTFOLIO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06040f;
+      --surface: #0e0b1c;
+      --surface2: #150f28;
+      --border: #2a1d50;
+      --accent: #9b30ff;
+      --accent2: #00f0ff;
+      --red: #ff3060;
+      --text: #e8e0ff;
+      --muted: #7868aa;
+      --green: #00e5a0;
+      --mono: 'Share Tech Mono', monospace;
+      --head: 'Orbitron', sans-serif;
+      --body: 'Rajdhani', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NEXUS CANVAS ── */
+    #nexus-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    nav, section, footer, .section-divider, #hero {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 2rem;
+      background: rgba(6,4,15,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), var(--accent), transparent);
+    }
+
+    .nav-logo {
+      font-family: var(--head);
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-shadow: 0 0 14px rgba(155,48,255,0.6);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent2);
+      text-shadow: 0 0 8px rgba(0,240,255,0.5);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -30%; left: -10%;
+      width: 60%; height: 80%;
+      background: radial-gradient(ellipse, rgba(155,48,255,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%; right: -5%;
+      width: 50%; height: 70%;
+      background: radial-gradient(ellipse, rgba(0,240,255,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Compound-eye hex grid */
+    .hero-eye-grid {
+      position: absolute;
+      top: 0; right: 0;
+      width: 380px; height: 100%;
+      opacity: 0.05;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Rider helmet */
+    .rider-mark {
+      position: absolute;
+      right: 2.5rem; bottom: 2.5rem;
+      opacity: 0.07;
+      pointer-events: none;
+      filter: drop-shadow(0 0 18px var(--accent));
+    }
+
+    .hero-inner { max-width: 780px; margin: 0 auto; }
+
+    .system-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--green);
+      border: 1px solid rgba(0,229,160,0.3);
+      border-radius: 4px;
+      padding: 0.22rem 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .system-tag::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; } 50% { opacity:0.3; }
+    }
+
+    h1 {
+      font-family: var(--head);
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    h1 .last {
+      display: block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 20px rgba(155,48,255,0.4));
+    }
+
+    .exe-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: rgba(155,48,255,0.45);
+      margin-bottom: 1.4rem;
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 2.25rem;
+      font-weight: 600;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 18px rgba(155,48,255,0.35);
+    }
+    .btn-primary:hover { background: #b050ff; transform: translateY(-2px); box-shadow: 0 0 28px rgba(155,48,255,0.55); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent2);
+      border: 1px solid rgba(0,240,255,0.4);
+    }
+    .btn-outline:hover { border-color: var(--accent2); box-shadow: 0 0 14px rgba(0,240,255,0.25); transform: translateY(-2px); }
+
+    /* ── SECTION COMMON ── */
+    section {
+      padding: 5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.35rem;
+    }
+
+    h2 {
+      font-family: var(--head);
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-divider {
+      max-width: 900px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* ── ABOUT STATS ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-card .stat-val {
+      font-family: var(--head);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-card .stat-key {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── SKILLS / LOADOUT ── */
+    .loadout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .loadout-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .loadout-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .loadout-card h3 {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      color: var(--accent2);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.18rem 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ── EXPERIENCE / TIMELINE ── */
+    .timeline-item {
+      position: relative;
+      padding-left: 1.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.4rem;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(155,48,255,0.6);
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 3.5px; top: 1.1rem;
+      width: 1px;
+      height: calc(100% + 0.5rem);
+      background: var(--border);
+    }
+
+    .timeline-item:last-child::after { display: none; }
+
+    .tl-company {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--accent2);
+      margin-bottom: 0.15rem;
+    }
+
+    .tl-role {
+      font-family: var(--head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.2rem;
+    }
+
+    .tl-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .tl-body { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .tl-body li {
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding-left: 1.1rem;
+      position: relative;
+      font-weight: 600;
+    }
+
+    .tl-body li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ── PROJECTS / MISSIONS ── */
+    .missions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .mission-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.6rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .mission-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .mission-card:hover::before { opacity: 1; }
+
+    .mission-id {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .mission-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+      border: 1px solid rgba(155,48,255,0.4);
+      color: var(--accent);
+      background: rgba(155,48,255,0.08);
+      margin-bottom: 0.75rem;
+    }
+
+    .mission-card h3 {
+      font-family: var(--head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .mission-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .mission-tech { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem; }
+
+    .mission-tech span {
+      background: rgba(155,48,255,0.15);
+      color: var(--accent);
+      border-radius: 3px;
+      padding: 0.15rem 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+    }
+
+    .mission-links { display: flex; gap: 0.75rem; }
+
+    .mission-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.2s;
+    }
+
+    .mission-links a:hover { color: var(--accent2); }
+
+    .mission-card.placeholder {
+      border-style: dashed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 0.5rem;
+      min-height: 180px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+
+    /* ── EDUCATION / CERTS ── */
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    .edu-icon {
+      width: 42px; height: 42px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(155,48,255,0.3), rgba(0,240,255,0.2));
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .edu-info h3 {
+      font-family: var(--head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.2rem;
+    }
+
+    .edu-degree {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .edu-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent2);
+    }
+
+    .cert-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+    }
+
+    .cert-icon {
+      width: 34px; height: 34px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .cert-info h3 {
+      font-family: var(--head);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .cert-info span {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .cert-badge {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      background: rgba(0,229,160,0.08);
+      color: var(--green);
+      border: 1px solid rgba(0,229,160,0.25);
+    }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.85rem 1.3rem;
+      text-decoration: none;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 14px rgba(155,48,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .contact-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 1.75rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    footer span { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0.8rem 1rem; }
+      .nav-links { gap: 1rem; }
+      h1 { font-size: 2rem; }
+      .hero-cta { flex-direction: column; }
+      .btn { justify-content: center; }
+      .edu-card { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NEXUS ANIMATED BACKGROUND -->
+  <canvas id="nexus-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">SC.EXE</div>
+    <ul class="nav-links">
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#skills">LOADOUT</a></li>
+      <li><a href="#experience">EXP</a></li>
+      <li><a href="#projects">MISSIONS</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+      <li><a href="https://github.com/SaikouTLS" target="_blank" rel="noopener">GITHUB ↗</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" style="max-width:100%; padding-top:8rem;">
+
+    <div class="hero-eye-grid" aria-hidden="true">
+      <svg width="380" height="900" viewBox="0 0 380 900" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="hex" x="0" y="0" width="52" height="60" patternUnits="userSpaceOnUse">
+            <polygon points="26,2 50,16 50,44 26,58 2,44 2,16" fill="none" stroke="#9b30ff" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="380" height="900" fill="url(#hex)"/>
+      </svg>
+    </div>
+
+    <svg class="rider-mark" width="220" height="260" viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="110" cy="115" rx="88" ry="95" fill="none" stroke="#9b30ff" stroke-width="3"/>
+      <ellipse cx="75" cy="100" rx="28" ry="18" fill="none" stroke="#9b30ff" stroke-width="2.5" transform="rotate(-15 75 100)"/>
+      <ellipse cx="145" cy="100" rx="28" ry="18" fill="none" stroke="#9b30ff" stroke-width="2.5" transform="rotate(15 145 100)"/>
+      <line x1="75" y1="83" x2="75" y2="117" stroke="#00f0ff" stroke-width="1"/>
+      <line x1="58" y1="100" x2="92" y2="100" stroke="#00f0ff" stroke-width="1"/>
+      <line x1="145" y1="83" x2="145" y2="117" stroke="#00f0ff" stroke-width="1"/>
+      <line x1="128" y1="100" x2="162" y2="100" stroke="#00f0ff" stroke-width="1"/>
+      <path d="M110 22 L90 55 L110 48 L130 55 Z" fill="none" stroke="#9b30ff" stroke-width="2"/>
+      <path d="M72 148 Q110 170 148 148" fill="none" stroke="#9b30ff" stroke-width="2"/>
+      <path d="M38 195 Q110 240 182 195 L195 230 Q110 260 25 230 Z" fill="none" stroke="#9b30ff" stroke-width="2"/>
+    </svg>
+
+    <div class="hero-inner">
+      <div class="system-tag">SYSTEM ONLINE · OPEN TO OPPORTUNITIES</div>
+      <h1>SAMUEL<span class="last">COKER_</span></h1>
+      <small class="exe-tag">// henshin · sc.exe · build 2026</small>
+      <p class="hero-sub">
+        B.S. Computer Science · Morgan State University · Class of 2026<br>
+        Hardware · Software Engineering · AI · Cybersecurity
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">[ VIEW MISSIONS ]</a>
+        <a href="mailto:samuelcoker784@gmail.com" class="btn btn-outline">[ ESTABLISH CONTACT ]</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// 01 · ABOUT</p>
+    <h2>RIDER PROFILE</h2>
+    <p style="color: var(--muted); max-width: 640px; font-size: 1rem; font-weight: 600;">
+      Detail-oriented CS senior based in Aberdeen, MD. Hands-on with hardware troubleshooting,
+      AI-assisted app development, and technical support. I break down complex systems —
+      whether that's diagnosing a failing component, building a chatbot, or explaining
+      something technical to someone who's never touched a command line.
+    </p>
+    <p style="color: var(--muted); max-width: 640px; font-size: 1rem; font-weight: 600; margin-top: 1rem;">
+      Currently pursuing CompTIA Security+ and A+ while finishing my degree. Actively seeking
+      roles in IT, software engineering, or cybersecurity. Graduating Spring 2026.
+    </p>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="stat-val">2026</span>
+        <span class="stat-key">Graduation</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">2+</span>
+        <span class="stat-key">Projects</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">A+</span>
+        <span class="stat-key">In Progress</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">SEC+</span>
+        <span class="stat-key">In Progress</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">MD</span>
+        <span class="stat-key">Location</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SKILLS / LOADOUT -->
+  <section id="skills">
+    <p class="section-label">// 02 · SKILLS</p>
+    <h2>LOADOUT</h2>
+    <div class="loadout-grid">
+      <div class="loadout-card">
+        <h3>// Hardware &amp; Infra</h3>
+        <div class="skill-tags">
+          <span class="tag">PC Building/Repair</span>
+          <span class="tag">Troubleshooting</span>
+          <span class="tag">Peripherals</span>
+          <span class="tag">Mobile Diagnostics</span>
+        </div>
+      </div>
+      <div class="loadout-card">
+        <h3>// Software &amp; DBs</h3>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">Git</span>
+          <span class="tag">VS Code</span>
+        </div>
+      </div>
+      <div class="loadout-card">
+        <h3>// AI &amp; Dev</h3>
+        <div class="skill-tags">
+          <span class="tag">AI / ML</span>
+          <span class="tag">NLP</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">Emotion Detection</span>
+        </div>
+      </div>
+      <div class="loadout-card">
+        <h3>// Systems</h3>
+        <div class="skill-tags">
+          <span class="tag">Windows</span>
+          <span class="tag">ChromeOS</span>
+          <span class="tag">Android</span>
+          <span class="tag">iOS</span>
+        </div>
+      </div>
+      <div class="loadout-card">
+        <h3>// Professional</h3>
+        <div class="skill-tags">
+          <span class="tag">Technical Triage</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">Customer Service</span>
+          <span class="tag">End-User Training</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">// 03 · EXPERIENCE</p>
+    <h2>FIELD RECORD</h2>
+    <div class="timeline-item">
+      <p class="tl-company">BEST BUY · ABERDEEN, MD</p>
+      <p class="tl-role">TECHNICAL SUPPORT &amp; SALES</p>
+      <p class="tl-date">2025 – PRESENT</p>
+      <ul class="tl-body">
+        <li>Diagnose and resolve hardware, software, and connectivity issues across mobile devices and computing platforms.</li>
+        <li>Perform high-volume technical triage, prioritizing issues by severity and de-escalating stressful situations.</li>
+        <li>Manage device activations and user data securely, adhering to vendor and carrier privacy protocols.</li>
+        <li>Translate complex technical concepts into clear, actionable steps for non-technical customers.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PROJECTS / MISSIONS -->
+  <section id="projects">
+    <p class="section-label">// 04 · PROJECTS</p>
+    <h2>DEPLOYED MISSIONS</h2>
+    <div class="missions-grid">
+
+      <div class="mission-card">
+        <p class="mission-id">MISSION_001 · AI · NLP</p>
+        <span class="mission-badge">■ PYTHON / FLASK</span>
+        <h3>EMOTION-AWARE THERAPY CHATBOT</h3>
+        <p>AI-powered chatbot that detects emotional states from user input and responds with context-sensitive, therapeutic dialogue — bridging mental health support and NLP.</p>
+        <div class="mission-tech">
+          <span>Python</span>
+          <span>Flask</span>
+          <span>NLP / AI</span>
+          <span>Firebase</span>
+        </div>
+        <div class="mission-links">
+          <a href="https://github.com/SaikouTLS/emotion-therapist-chatbot" target="_blank" rel="noopener">⟶ GitHub</a>
+        </div>
+      </div>
+
+      <div class="mission-card">
+        <p class="mission-id">MISSION_002 · MOBILE · AI</p>
+        <span class="mission-badge">■ FIREBASE / PYTHON</span>
+        <h3>HEALING MINDS MENTAL HEALTH APP</h3>
+        <p>Mobile-focused mental health platform with mood tracking, guided resources, and AI-assisted check-ins — designed with accessibility and user well-being at its core.</p>
+        <div class="mission-tech">
+          <span>Python</span>
+          <span>Firebase</span>
+          <span>AI</span>
+          <span>Flask</span>
+        </div>
+        <div class="mission-links">
+          <a href="https://github.com/SaikouTLS/Mental-Health-app-cosc-458-" target="_blank" rel="noopener">⟶ GitHub</a>
+        </div>
+      </div>
+
+      <div class="mission-card placeholder">
+        <span style="font-size:1.5rem; font-family: var(--head);">[ + ]</span>
+        <p>MORE MISSIONS INCOMING</p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- EDUCATION & CERTS -->
+  <section id="education">
+    <p class="section-label">// 05 · EDUCATION &amp; CERTS</p>
+    <h2>CREDENTIALS</h2>
+
+    <div class="edu-card">
+      <div class="edu-icon">🎓</div>
+      <div class="edu-info">
+        <h3>MORGAN STATE UNIVERSITY</h3>
+        <p class="edu-degree">Bachelor of Science in Computer Science</p>
+        <p class="edu-date">BALTIMORE, MD · EXPECTED SUMMER 2026</p>
+      </div>
+    </div>
+
+    <div class="cert-list">
+      <div class="cert-item">
+        <div class="cert-icon">🔒</div>
+        <div class="cert-info">
+          <h3>COMPTIA SECURITY+</h3>
+          <span>Cybersecurity fundamentals &amp; threat management</span>
+        </div>
+        <span class="cert-badge">IN PROGRESS</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">🖥</div>
+        <div class="cert-info">
+          <h3>COMPTIA A+</h3>
+          <span>IT hardware, software &amp; troubleshooting</span>
+        </div>
+        <span class="cert-badge">IN PROGRESS</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">🌐</div>
+        <div class="cert-info">
+          <h3>COMPTIA NETWORK+</h3>
+          <span>Networking fundamentals &amp; infrastructure</span>
+        </div>
+        <span class="cert-badge">IN PROGRESS</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">// 06 · CONTACT</p>
+    <h2>ESTABLISH CONNECTION</h2>
+    <p style="color: var(--muted); font-size: 0.95rem; font-weight: 600; font-family: var(--mono);">
+      Open to internships, entry-level roles, and interesting conversations.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:samuelcoker784@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+        samuelcoker784@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/samuel-coker784/" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/SaikouTLS" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        github.com/SaikouTLS
+      </a>
+      <a href="tel:12404676442" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.05z"/>
+        </svg>
+        (240) 467-6442
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 · SAMUEL COKER · <span>HENSHIN</span> ■ SESSION ACTIVE</p>
+  </footer>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById('nexus-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, nodes;
+
+      const NODE_COUNT = 85;
+      const CONNECT_DIST = 165;
+      const COLORS = ['#9b30ff', '#00f0ff', '#c060ff', '#5050ff', '#00c8e0'];
+
+      function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      function makeNode() {
+        return {
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.42,
+          vy: (Math.random() - 0.5) * 0.42,
+          r: Math.random() * 2 + 1,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          pulse: Math.random() * Math.PI * 2,
+        };
+      }
+
+      function hexToRgb(hex) {
+        const r = parseInt(hex.slice(1,3),16);
+        const g = parseInt(hex.slice(3,5),16);
+        const b = parseInt(hex.slice(5,7),16);
+        return `${r},${g},${b}`;
+      }
+
+      function init() { resize(); nodes = Array.from({ length: NODE_COUNT }, makeNode); }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        nodes.forEach(n => {
+          n.x += n.vx; n.y += n.vy; n.pulse += 0.018;
+          if (n.x < 0 || n.x > W) n.vx *= -1;
+          if (n.y < 0 || n.y > H) n.vy *= -1;
+        });
+
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const a = nodes[i], b = nodes[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < CONNECT_DIST) {
+              const alpha = (1 - dist / CONNECT_DIST) * 0.3;
+              const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+              grad.addColorStop(0, `rgba(${hexToRgb(a.color)},${alpha})`);
+              grad.addColorStop(1, `rgba(${hexToRgb(b.color)},${alpha})`);
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.strokeStyle = grad;
+              ctx.lineWidth = 0.75;
+              ctx.stroke();
+            }
+          }
+        }
+
+        nodes.forEach(n => {
+          const glow = Math.sin(n.pulse) * 0.5 + 0.5;
+          const radius = n.r + glow * 1.5;
+          const rgb = hexToRgb(n.color);
+          const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, radius * 4);
+          g.addColorStop(0, `rgba(${rgb},0.8)`);
+          g.addColorStop(1, `rgba(${rgb},0)`);
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, radius * 4, 0, Math.PI * 2);
+          ctx.fillStyle = g;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, radius, 0, Math.PI * 2);
+          ctx.fillStyle = n.color;
+          ctx.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      init();
+      draw();
+    })();
+  </script>
+</body>
+</html>
