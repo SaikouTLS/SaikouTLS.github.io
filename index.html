@@ -1032,7 +1032,200 @@
     <p>© 2026 Samuel Coker &nbsp;·&nbsp; <span class="henshin">HENSHIN ✦</span></p>
   </footer>
 
+  <!-- MUSIC TOGGLE BUTTON -->
+  <style>
+    #music-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 200;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(14, 11, 28, 0.85);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      color: var(--muted);
+    }
+    #music-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(155,48,255,0.3);
+      color: var(--accent);
+    }
+    #music-btn.playing {
+      border-color: var(--accent2);
+      box-shadow: 0 0 14px rgba(0,240,255,0.3);
+      color: var(--accent2);
+      animation: btn-pulse 3s ease-in-out infinite;
+    }
+    @keyframes btn-pulse {
+      0%,100% { box-shadow: 0 0 10px rgba(0,240,255,0.2); }
+      50%      { box-shadow: 0 0 22px rgba(0,240,255,0.5); }
+    }
+  </style>
+  <button id="music-btn" title="Toggle ambient music">♪</button>
+
   <script>
+    // ── AMBIENT SPACE LO-FI GENERATOR ────────────────────────────────────────
+    (() => {
+      const btn = document.getElementById('music-btn');
+      let actx = null, masterGain = null, playing = false, nodes = [];
+
+      function createReverb(ctx) {
+        const conv = ctx.createConvolver();
+        const len  = ctx.sampleRate * 5;
+        const buf  = ctx.createBuffer(2, len, ctx.sampleRate);
+        for (let c = 0; c < 2; c++) {
+          const d = buf.getChannelData(c);
+          for (let i = 0; i < len; i++)
+            d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 1.4);
+        }
+        conv.buffer = buf;
+        return conv;
+      }
+
+      function mtof(midi) { return 440 * Math.pow(2, (midi - 69) / 12); }
+
+      function startMusic() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = actx.createGain();
+        masterGain.gain.setValueAtTime(0, actx.currentTime);
+        masterGain.gain.linearRampToValueAtTime(0.2, actx.currentTime + 5);
+        masterGain.connect(actx.destination);
+
+        // Warm low-pass filter over everything — golden, not cold
+        const warmFilter = actx.createBiquadFilter();
+        warmFilter.type = 'lowpass';
+        warmFilter.frequency.value = 1800;
+        warmFilter.Q.value = 0.6;
+        warmFilter.connect(masterGain);
+
+        // Slow filter sweep LFO for breathing warmth
+        const filterLfo = actx.createOscillator();
+        const filterLfoG = actx.createGain();
+        filterLfo.frequency.value = 0.04;
+        filterLfoG.gain.value = 400;
+        filterLfo.connect(filterLfoG);
+        filterLfoG.connect(warmFilter.frequency);
+        filterLfo.start();
+        nodes.push(filterLfo, filterLfoG);
+
+        const reverb = createReverb(actx);
+        reverb.connect(warmFilter);
+
+        // Stereo ping-pong delay for spaciousness
+        const delL = actx.createDelay(1.0); delL.delayTime.value = 0.38;
+        const delR = actx.createDelay(1.0); delR.delayTime.value = 0.52;
+        const fbL  = actx.createGain(); fbL.gain.value = 0.28;
+        const fbR  = actx.createGain(); fbR.gain.value = 0.28;
+        const merger = actx.createChannelMerger(2);
+        delL.connect(fbL); fbL.connect(delR);
+        delR.connect(fbR); fbR.connect(delL);
+        delL.connect(merger, 0, 0);
+        delR.connect(merger, 0, 1);
+        merger.connect(warmFilter);
+
+        function toDelay(node) { node.connect(delL); node.connect(delR); }
+
+        // Warm pad — Fmaj9 voicing: F2 C3 A3 E4 G4
+        // Sawtooth + heavy filtering = analog warmth
+        const padNotes = [41, 48, 57, 64, 67];
+        padNotes.forEach((midi, i) => {
+          // Two detuned saws per note for chorus effect
+          [-4, 4].forEach(detune => {
+            const osc  = actx.createOscillator();
+            const gain = actx.createGain();
+            const lfo  = actx.createOscillator();
+            const lfoG = actx.createGain();
+
+            osc.type = i < 2 ? 'sawtooth' : 'triangle';
+            osc.frequency.value = mtof(midi);
+            osc.detune.value = detune + (Math.random() - 0.5) * 4;
+
+            const vol = i === 0 ? 0.14 : i === 1 ? 0.11 : 0.07;
+            gain.gain.value = vol;
+
+            // Slow volume breathing
+            lfo.type = 'sine';
+            lfo.frequency.value = 0.025 + Math.random() * 0.02;
+            lfoG.gain.value = vol * 0.3;
+            lfo.connect(lfoG); lfoG.connect(gain.gain);
+
+            osc.connect(gain);
+            gain.connect(reverb);
+            toDelay(gain);
+
+            osc.start(); lfo.start();
+            nodes.push(osc, gain, lfo, lfoG);
+          });
+        });
+
+        // Sub bass pulse — warm low thump every ~2.4s
+        function subPulse() {
+          if (!playing) return;
+          const osc = actx.createOscillator();
+          const env = actx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = mtof(29); // F1
+
+          env.gain.setValueAtTime(0, actx.currentTime);
+          env.gain.linearRampToValueAtTime(0.18, actx.currentTime + 0.08);
+          env.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 1.2);
+
+          osc.connect(env); env.connect(masterGain);
+          osc.start(); osc.stop(actx.currentTime + 1.3);
+
+          setTimeout(subPulse, 2400 + Math.random() * 800);
+        }
+        setTimeout(subPulse, 2000);
+
+        // Warm melody sparkles — Fmaj pentatonic: F A C D G (high register)
+        const melody = [77, 81, 84, 86, 91]; // F5 A5 C6 D6 G6
+        let mIdx = 0;
+
+        function playNote() {
+          if (!playing) return;
+          const osc = actx.createOscillator();
+          const env = actx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.value = mtof(melody[mIdx]);
+          mIdx = (mIdx + Math.floor(Math.random() * 3) + 1) % melody.length;
+
+          env.gain.setValueAtTime(0, actx.currentTime);
+          env.gain.linearRampToValueAtTime(0.055, actx.currentTime + 0.4);
+          env.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 3.5);
+
+          osc.connect(env);
+          env.connect(reverb);
+          toDelay(env);
+          osc.start(); osc.stop(actx.currentTime + 4);
+
+          setTimeout(playNote, 3000 + Math.random() * 5000);
+        }
+        setTimeout(playNote, 4000);
+      }
+
+      function stopMusic() {
+        if (!actx) return;
+        masterGain.gain.linearRampToValueAtTime(0, actx.currentTime + 2);
+        setTimeout(() => { actx.close(); actx = null; nodes = []; }, 2200);
+      }
+
+      btn.addEventListener('click', () => {
+        playing = !playing;
+        btn.classList.toggle('playing', playing);
+        btn.title = playing ? 'Pause ambient music' : 'Play ambient music';
+        if (playing) startMusic(); else stopMusic();
+      });
+    })();
+
+    // ── STARFIELD ────────────────────────────────────────────────────────────
     (() => {
       const canvas = document.getElementById('star-canvas');
       const ctx = canvas.getContext('2d');
