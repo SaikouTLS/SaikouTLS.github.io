@@ -3,25 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Samuel Coker — Portfolio</title>
+  <title>Samuel Coker — IT &amp; Cybersecurity Portfolio</title>
+  <meta name="description" content="Personal portfolio for Samuel Coker — IT Support, Hardware Diagnostics, and Cybersecurity-focused Computer Science graduate." />
+  <meta property="og:title" content="Samuel Coker — Portfolio" />
+  <meta property="og:description" content="Personal portfolio for Samuel Coker — IT Support, Hardware Diagnostics, and Cybersecurity-focused Computer Science graduate." />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #04020e;
-      --surface: #0b0820;
-      --surface2: #110d2e;
-      --border: #241a4a;
-      --accent: #9b30ff;
-      --accent2: #00f0ff;
-      --gold: #ffd060;
-      --red: #ff3060;
-      --text: #e8e0ff;
-      --muted: #7a6daa;
-      --green: #00e5a0;
+      --bg: #090605;
+      --surface: #130e0b;
+      --surface2: #1b130f;
+      --border: #362318;
+      --border-strong: #5c3620;
+      --accent: #ff6a1a;
+      --accent-deep: #c9410a;
+      --accent2: #ffb347;
+      --gold: #ffd27d;
+      --text: #f7efe8;
+      --muted: #b39c89;
+      --green: #22c58b;
+      --nav-height: 68px;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color-scheme: dark;
+    }
 
     body {
       background: var(--bg);
@@ -30,409 +41,843 @@
       font-size: 16px;
       line-height: 1.65;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      letter-spacing: 0.01em;
     }
 
-    /* ── STAR CANVAS ── */
+    body.intro-lock {
+      overflow: hidden;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent2);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    /* ── STARFIELD CANVAS ── */
     #star-canvas {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       z-index: 0;
       pointer-events: none;
     }
 
-    nav, #hero, section, footer, .divider {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── NAV ── */
-    nav {
+    /* ── AMBIENT NEBULA GLOWS ── */
+    .nebula-layer {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2.5rem;
-      background: rgba(4, 2, 14, 0.82);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Rider belt stripe */
-    nav::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        var(--accent) 20%,
-        var(--accent2) 50%,
-        var(--accent) 80%,
-        transparent 100%);
-    }
-
-    .nav-logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      color: var(--text);
-    }
-
-    .nav-logo span { color: var(--accent); }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--accent2); }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 8rem 2.5rem 5rem;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
       overflow: hidden;
     }
 
-    /* Nebula glows */
     .nebula-left {
       position: absolute;
-      top: -10%; left: -15%;
-      width: 65%; height: 85%;
-      background: radial-gradient(ellipse, rgba(155,48,255,0.13) 0%, transparent 65%);
-      pointer-events: none;
+      top: -12%;
+      left: -14%;
+      width: 62%;
+      height: 80%;
+      background: radial-gradient(ellipse, rgba(255, 106, 26, 0.12) 0%, transparent 65%);
     }
 
     .nebula-right {
       position: absolute;
-      bottom: -15%; right: -10%;
-      width: 55%; height: 75%;
-      background: radial-gradient(ellipse, rgba(0,240,255,0.07) 0%, transparent 65%);
-      pointer-events: none;
+      bottom: -16%;
+      right: -12%;
+      width: 55%;
+      height: 72%;
+      background: radial-gradient(ellipse, rgba(255, 179, 71, 0.08) 0%, transparent 65%);
     }
 
-    /* Compound eye hex overlay */
+    /* ── SOLAR EMBER HENSHIN INTRO OVERLAY ── */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: radial-gradient(circle at 50% 44%, rgba(36, 18, 9, 0.96) 0%, rgba(9, 6, 5, 0.985) 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+    }
+
+    #intro-overlay.is-hidden {
+      opacity: 0;
+      transform: scale(1.03);
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .intro-skip {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.75rem;
+      background: rgba(19, 14, 11, 0.85);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.55rem 1.05rem;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      min-height: 40px;
+      transition: color 0.18s, border-color 0.18s, transform 0.18s;
+    }
+
+    .intro-skip:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .intro-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+    }
+
+    .intro-crest-wrap {
+      position: relative;
+      width: 188px;
+      height: 188px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-ring {
+      position: absolute;
+      width: 176px;
+      height: 176px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 106, 26, 0.38);
+      box-shadow: 0 0 46px rgba(255, 106, 26, 0.22), inset 0 0 30px rgba(255, 179, 71, 0.14);
+      opacity: 0;
+      transform: scale(0.76);
+      animation: introRingPulse 1.8s var(--ease-out) forwards;
+    }
+
+    .intro-crest {
+      position: relative;
+      z-index: 1;
+      width: 166px;
+      height: 166px;
+      filter: drop-shadow(0 0 20px rgba(255, 106, 26, 0.48));
+    }
+
+    .intro-crest .crest-stroke {
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      animation: introDraw 1.45s var(--ease-out) forwards;
+    }
+
+    .intro-crest .crest-eye {
+      stroke-dasharray: 320;
+      stroke-dashoffset: 320;
+      animation: introDraw 1.1s var(--ease-out) 0.25s forwards;
+    }
+
+    .intro-crest .crest-core {
+      opacity: 0;
+      transform-origin: 120px 74px;
+      animation: introCoreIgnite 0.9s var(--ease-out) 0.6s forwards;
+    }
+
+    .intro-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .intro-title span {
+      color: var(--accent);
+    }
+
+    .intro-kicker {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      color: var(--accent2);
+      margin-bottom: 1.45rem;
+      text-transform: uppercase;
+    }
+
+    .intro-progress-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(54, 35, 24, 0.9);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 0.7rem;
+    }
+
+    .intro-progress-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent-deep), var(--accent), var(--accent2));
+      box-shadow: 0 0 14px rgba(255, 106, 26, 0.75);
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+
+    .intro-meta {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @keyframes introDraw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes introRingPulse {
+      0% { opacity: 0; transform: scale(0.76); }
+      55% { opacity: 1; transform: scale(1.03); }
+      100% { opacity: 0.85; transform: scale(1); }
+    }
+
+    @keyframes introCoreIgnite {
+      0% { opacity: 0; transform: scale(0.5); }
+      60% { opacity: 1; transform: scale(1.18); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── TOP NAVIGATION BAR (3-ZONE CONTRACT) ── */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      z-index: 100;
+      background: rgba(9, 6, 5, 0.86);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    header.site-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        var(--accent) 22%,
+        var(--accent2) 50%,
+        var(--accent) 78%,
+        transparent 100%);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: opacity 0.18s;
+    }
+
+    .nav-logo span { color: var(--accent); }
+    .nav-logo:hover { opacity: 0.9; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      position: relative;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 0.1rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: color 0.18s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.2s var(--ease-out);
+    }
+
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+      color: var(--text);
+    }
+
+    .nav-links a[aria-current="page"]::after,
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-links a[aria-current="page"] {
+      color: var(--accent2);
+    }
+
+    .header-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.48rem 1rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 106, 26, 0.48);
+      background: rgba(255, 106, 26, 0.1);
+      color: var(--accent2);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-height: 40px;
+      transition: border-color 0.18s, background-color 0.18s, transform 0.18s, color 0.18s;
+    }
+
+    .header-action:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #090605;
+      transform: translateY(-1px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.18s, color 0.18s;
+    }
+
+    .mobile-menu-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent2);
+    }
+
+    /* ── MOBILE DRAWER ── */
+    .mobile-drawer {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background: rgba(13, 9, 7, 0.97);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+    }
+
+    .mobile-drawer.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .mobile-drawer a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      padding: 0.65rem 0.9rem;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background-color 0.18s, color 0.18s;
+    }
+
+    .mobile-drawer a:hover,
+    .mobile-drawer a[aria-current="page"] {
+      background: rgba(255, 106, 26, 0.12);
+      color: var(--accent2);
+    }
+
+    /* ── MAIN ROUTED VIEWPORT ── */
+    main#page-outlet {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      padding-top: var(--nav-height);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+      width: 100%;
+    }
+
+    .page-view.is-active {
+      display: block;
+    }
+
+    .page-view.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .page-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 3.75rem 2rem 4.25rem;
+    }
+
+    /* ── HERO (HOME VIEW) ── */
+    .hero-stage {
+      position: relative;
+      min-height: calc(100vh - var(--nav-height) - 96px);
+      display: flex;
+      align-items: center;
+      padding: 3.5rem 2rem;
+      overflow: hidden;
+    }
+
     .hex-overlay {
       position: absolute;
-      top: 0; right: 0;
-      width: 40%; height: 100%;
-      opacity: 0.04;
+      top: 0;
+      right: 0;
+      width: 42%;
+      height: 100%;
+      opacity: 0.055;
       pointer-events: none;
       overflow: hidden;
     }
 
-    /* Rider silhouette watermark */
     .rider-watermark {
       position: absolute;
-      right: 3rem; bottom: 3rem;
-      opacity: 0.06;
+      right: 3.5rem;
+      bottom: 2.5rem;
+      opacity: 0.08;
       pointer-events: none;
-      filter: drop-shadow(0 0 30px var(--accent));
+      filter: drop-shadow(0 0 28px rgba(255, 106, 26, 0.5));
     }
 
-    .hero-inner { max-width: 800px; margin: 0 auto; }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+    }
 
-    .rider-tag {
+    .hero-availability {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       color: var(--green);
-      border: 1px solid rgba(0,229,160,0.3);
-      border-radius: 2px;
-      padding: 0.25rem 0.9rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
-    .rider-tag::before {
-      content: '';
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 10px var(--green);
-      animation: pulse 2.2s infinite;
+    .hero-availability span.sep {
+      color: var(--muted);
     }
 
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+    .hero-availability span.loc {
+      color: var(--muted);
+      font-weight: 500;
+    }
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-size: clamp(2.6rem, 6.8vw, 4.85rem);
       font-weight: 900;
-      line-height: 1.0;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.5rem;
+      line-height: 1.02;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.75rem;
+      text-wrap: balance;
     }
 
     h1 .gradient {
       display: block;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--gold) 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 62%, var(--gold) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 28px rgba(155,48,255,0.5));
+      filter: drop-shadow(0 0 26px rgba(255, 106, 26, 0.36));
     }
 
     .hero-subtitle {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      opacity: 0.7;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      color: var(--accent2);
       text-transform: uppercase;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
 
     .hero-desc {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       color: var(--muted);
-      max-width: 540px;
-      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-bottom: 2.25rem;
       font-weight: 400;
     }
 
-    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-cta {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.75rem 1.6rem;
-      border-radius: 3px;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.72rem 1.5rem;
+      min-height: 44px;
+      border-radius: 4px;
       font-family: 'Exo 2', sans-serif;
       font-size: 0.88rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: 0.06em;
       text-decoration: none;
-      transition: all 0.22s;
+      white-space: nowrap;
+      flex-shrink: 0;
       cursor: pointer;
+      transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out), border-color 0.18s, background-color 0.18s, color 0.18s;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #6020cc);
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
       color: #fff;
       border: 1px solid var(--accent);
-      box-shadow: 0 0 22px rgba(155,48,255,0.4);
+      box-shadow: 0 0 22px rgba(255, 106, 26, 0.35);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(155,48,255,0.65); }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 34px rgba(255, 106, 26, 0.55);
+    }
 
     .btn-outline {
-      background: transparent;
+      background: rgba(19, 14, 11, 0.72);
       color: var(--accent2);
-      border: 1px solid rgba(0,240,255,0.4);
-    }
-    .btn-outline:hover { border-color: var(--accent2); box-shadow: 0 0 18px rgba(0,240,255,0.25); transform: translateY(-2px); }
-
-    /* ── SECTIONS ── */
-    section {
-      padding: 5.5rem 2.5rem;
-      max-width: 920px;
-      margin: 0 auto;
+      border: 1px solid rgba(255, 179, 71, 0.42);
     }
 
+    .btn-outline:hover {
+      border-color: var(--accent2);
+      background: rgba(255, 179, 71, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.75rem;
+    }
+
+    .hero-metric {
+      background: rgba(19, 14, 11, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.1rem 1.25rem;
+      transition: border-color 0.18s;
+    }
+
+    .hero-metric:hover {
+      border-color: var(--border-strong);
+    }
+
+    .hero-metric-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 0.25rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-metric-label {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    /* ── SHARED SECTION TYPOGRAPHY ── */
     .section-eyebrow {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
       color: var(--accent2);
-      margin-bottom: 0.5rem;
-      opacity: 0.8;
+      margin-bottom: 0.45rem;
+      font-variant-numeric: tabular-nums;
     }
 
     h2 {
       font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-size: clamp(1.55rem, 3.6vw, 2.2rem);
       font-weight: 900;
-      letter-spacing: 0.06em;
-      margin-bottom: 2.75rem;
-      background: linear-gradient(90deg, var(--text), var(--muted));
+      letter-spacing: 0.04em;
+      margin-bottom: 1.75rem;
+      text-wrap: balance;
+      background: linear-gradient(90deg, var(--text) 0%, var(--accent2) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .divider {
-      max-width: 920px;
-      margin: 0 auto;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    .section-block + .section-block {
+      margin-top: 3.5rem;
+      padding-top: 3.25rem;
+      border-top: 1px solid var(--border);
     }
 
-    /* ── ABOUT / STAT CARDS ── */
+    /* ── ABOUT & CAPABILITIES ── */
     .about-text {
       color: var(--muted);
-      max-width: 660px;
+      max-width: 72ch;
       font-size: 1rem;
     }
 
-    .about-text + .about-text { margin-top: 1rem; }
+    .about-text + .about-text {
+      margin-top: 1rem;
+    }
+
+    .about-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
 
     .stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
-      margin-top: 2.5rem;
+      margin-top: 2.25rem;
     }
 
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 1.1rem;
+      padding: 1.15rem 1rem;
       text-align: center;
-      transition: border-color 0.2s;
+      transition: border-color 0.18s, transform 0.18s;
     }
 
-    .stat-card:hover { border-color: var(--accent); }
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
 
     .stat-val {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       font-weight: 900;
       color: var(--accent);
       display: block;
       margin-bottom: 0.25rem;
+      font-variant-numeric: tabular-nums;
     }
 
     .stat-key {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       color: var(--muted);
     }
 
-    /* ── ABILITIES / SKILLS ── */
     .abilities-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
-      gap: 1.1rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.15rem;
     }
 
     .ability-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 1.3rem 1.4rem;
-      transition: border-color 0.2s, transform 0.2s;
+      padding: 1.4rem 1.5rem;
       position: relative;
       overflow: hidden;
+      transition: border-color 0.18s, transform 0.18s;
     }
 
-    .ability-card::before {
+    .ability-card::after {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
       opacity: 0;
       transition: opacity 0.2s;
     }
 
-    .ability-card:hover { border-color: rgba(155,48,255,0.5); transform: translateY(-2px); }
-    .ability-card:hover::before { opacity: 1; }
+    .ability-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .ability-card:hover::after {
+      opacity: 1;
+    }
 
     .ability-card h3 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       color: var(--accent2);
       margin-bottom: 0.85rem;
     }
 
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-
-    .tag {
-      background: rgba(155,48,255,0.08);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 0.2rem 0.55rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--muted);
+    .ability-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.42rem;
     }
 
-    /* ── EXPERIENCE ── */
+    .ability-list li {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .ability-list li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ── EXPERIENCE & CREDENTIALS ── */
     .timeline-item {
       position: relative;
-      padding-left: 2rem;
-      margin-bottom: 2.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem 1.85rem;
     }
 
-    .timeline-item::before {
-      content: '◆';
-      position: absolute;
-      left: 0; top: 0.15rem;
-      font-size: 0.55rem;
-      color: var(--accent);
-      filter: drop-shadow(0 0 6px var(--accent));
+    .tl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
     }
-
-    .timeline-item::after {
-      content: '';
-      position: absolute;
-      left: 0.22rem; top: 0.9rem;
-      width: 1px;
-      height: calc(100% + 0.75rem);
-      background: linear-gradient(180deg, var(--accent), transparent);
-      opacity: 0.3;
-    }
-
-    .timeline-item:last-child::after { display: none; }
 
     .tl-org {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--accent2);
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.2rem;
     }
 
     .tl-role {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.2rem;
+      letter-spacing: 0.03em;
+      color: var(--text);
     }
 
     .tl-date {
-      font-size: 0.78rem;
+      font-size: 0.84rem;
       font-weight: 600;
       color: var(--muted);
-      margin-bottom: 0.85rem;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
-    .tl-body { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+    .tl-body {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
 
     .tl-body li {
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       color: var(--muted);
-      padding-left: 1.1rem;
+      padding-left: 1.15rem;
       position: relative;
     }
 
@@ -444,11 +889,145 @@
       font-weight: 700;
     }
 
-    /* ── PROJECTS / MISSIONS ── */
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.15rem 1.5rem;
+      transition: border-color 0.18s, transform 0.18s;
+    }
+
+    .cert-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .cert-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.2rem;
+      color: var(--text);
+    }
+
+    .cert-info p {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .cert-status {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--green);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .edu-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-degree {
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    .edu-date {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent2);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* ── MISSIONS / PROJECTS ── */
+    .missions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .missions-header h2 {
+      margin-bottom: 0;
+    }
+
+    .missions-lead {
+      color: var(--muted);
+      max-width: 66ch;
+      font-size: 0.96rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid transparent;
+      border-radius: 3px;
+      padding: 0.45rem 0.95rem;
+      min-height: 36px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background-color 0.18s, color 0.18s, border-color 0.18s;
+    }
+
+    .filter-btn:hover {
+      color: var(--text);
+    }
+
+    .filter-btn.is-active {
+      background: rgba(255, 106, 26, 0.16);
+      border-color: rgba(255, 106, 26, 0.45);
+      color: var(--accent2);
+    }
+
     .missions-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1.3rem;
+      gap: 1.35rem;
     }
 
     .mission-card {
@@ -456,594 +1035,602 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       padding: 1.75rem;
-      transition: border-color 0.22s, transform 0.22s;
+      display: flex;
+      flex-direction: column;
       position: relative;
       overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
     }
 
     .mission-card::after {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 2px;
       background: linear-gradient(90deg, var(--accent), var(--accent2), var(--gold));
       opacity: 0;
-      transition: opacity 0.22s;
+      transition: opacity 0.2s;
     }
 
-    .mission-card:hover { border-color: rgba(155,48,255,0.5); transform: translateY(-3px); }
-    .mission-card:hover::after { opacity: 1; }
-
-    .mission-number {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
+    .mission-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
     }
 
-    .mission-type {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(155,48,255,0.1);
-      border: 1px solid rgba(155,48,255,0.3);
-      border-radius: 2px;
-      padding: 0.18rem 0.55rem;
-      margin-bottom: 0.85rem;
+    .mission-card:hover::after {
+      opacity: 1;
+    }
+
+    .mission-card.is-filtered-out {
+      display: none;
+    }
+
+    .mission-meta {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.65rem;
+      font-variant-numeric: tabular-nums;
     }
 
     .mission-card h3 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       font-weight: 700;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.6rem;
-      line-height: 1.3;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.7rem;
+      line-height: 1.35;
+      color: var(--text);
     }
 
-    .mission-card p {
-      font-size: 0.88rem;
+    .mission-card p.mission-desc {
+      font-size: 0.9rem;
       color: var(--muted);
-      margin-bottom: 1.1rem;
-      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      line-height: 1.62;
+      flex: 1;
     }
 
-    .mission-tech { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem; }
-
-    .mission-tech span {
-      background: rgba(0,240,255,0.07);
-      color: var(--accent2);
-      border: 1px solid rgba(0,240,255,0.2);
-      border-radius: 3px;
-      padding: 0.15rem 0.5rem;
-      font-size: 0.73rem;
-      font-weight: 700;
+    .mission-stack {
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--border);
+      margin-bottom: 1rem;
     }
 
-    .mission-links { display: flex; gap: 0.85rem; }
+    .mission-stack strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .mission-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
 
     .mission-links a {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      color: var(--muted);
+      color: var(--accent2);
       text-decoration: none;
-      letter-spacing: 0.05em;
-      transition: color 0.2s;
+      letter-spacing: 0.04em;
+      transition: color 0.18s;
     }
 
-    .mission-links a:hover { color: var(--accent2); }
+    .mission-links a:hover {
+      color: var(--accent);
+    }
 
-    .mission-card.placeholder {
+    .mission-card.upcoming {
       border-style: dashed;
-      border-color: var(--border);
+      border-color: var(--border-strong);
+      background: rgba(19, 14, 11, 0.65);
+    }
+
+    /* ── LIVE GITHUB ACTIVITY SECTION (MISSIONS PAGE) ── */
+    .gh-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.15rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gh-header h2 {
+      margin-bottom: 0;
+    }
+
+    .gh-actions {
+      display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 0.6rem;
-      min-height: 200px;
-      color: var(--muted);
+      gap: 0.65rem;
+      flex-wrap: wrap;
     }
 
-    .placeholder-icon {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.4rem;
-      color: var(--border);
-    }
-
-    .placeholder-text {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* ── CREDENTIALS ── */
-    .edu-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
+    .gh-utility-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 40px;
+      padding: 0.45rem 0.95rem;
       border-radius: 4px;
-      padding: 1.6rem 1.75rem;
-      display: flex;
-      gap: 1.3rem;
-      align-items: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s, transform 0.18s;
+    }
+
+    .gh-utility-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent2);
+      transform: translateY(-1px);
+    }
+
+    .gh-utility-btn:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+
+    .gh-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
       margin-bottom: 1.75rem;
     }
 
-    .edu-emblem {
-      width: 48px; height: 48px;
-      border-radius: 6px;
-      background: linear-gradient(135deg, rgba(155,48,255,0.35), rgba(0,240,255,0.2));
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    .edu-info h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.2rem;
-    }
-
-    .edu-degree { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.2rem; }
-
-    .edu-date {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent2);
-    }
-
-    .cert-list { display: flex; flex-direction: column; gap: 0.85rem; }
-
-    .cert-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .gh-stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 1rem 1.4rem;
-      transition: border-color 0.2s;
+      padding: 1.05rem 1.15rem;
+      transition: border-color 0.18s;
     }
 
-    .cert-item:hover { border-color: rgba(155,48,255,0.4); }
+    .gh-stat-card:hover {
+      border-color: var(--border-strong);
+    }
 
-    .cert-icon {
-      width: 36px; height: 36px;
-      border-radius: 5px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    .gh-stat-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--accent2);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.2rem;
+    }
+
+    .gh-stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .gh-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 1.35rem;
+      align-items: start;
+    }
+
+    .gh-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+    }
+
+    .gh-panel-head {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-bottom: 1rem;
+      margin-bottom: 1.1rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .cert-info h3 {
+    .gh-panel-title {
       font-family: 'Orbitron', sans-serif;
       font-size: 0.82rem;
       font-weight: 700;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.1rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
     }
 
-    .cert-info span { font-size: 0.78rem; color: var(--muted); }
+    .gh-panel-sub {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
 
-    .cert-badge {
-      margin-left: auto;
-      font-size: 0.65rem;
+    .gh-repo-list,
+    .gh-activity-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gh-repo-item {
+      padding: 0.95rem 0;
+      border-bottom: 1px solid rgba(54, 35, 24, 0.72);
+    }
+
+    .gh-repo-item:first-child {
+      padding-top: 0;
+    }
+
+    .gh-repo-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .gh-repo-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .gh-repo-link {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.86rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.22rem 0.6rem;
-      border-radius: 2px;
-      background: rgba(0,229,160,0.08);
-      color: var(--green);
-      border: 1px solid rgba(0,229,160,0.25);
+      color: var(--text);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color 0.18s;
+    }
+
+    .gh-repo-link:hover {
+      color: var(--accent2);
+    }
+
+    .gh-repo-stats {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .gh-repo-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+      line-height: 1.5;
+    }
+
+    .gh-repo-meta {
+      font-size: 0.75rem;
+      color: var(--accent2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .gh-contrib-block {
+      padding-bottom: 1.15rem;
+      margin-bottom: 1.15rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gh-contrib-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .gh-bar-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.25rem 0.75rem;
+      align-items: center;
+      margin-bottom: 0.65rem;
+    }
+
+    .gh-bar-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .gh-bar-name {
+      font-size: 0.8rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gh-bar-count {
+      font-size: 0.76rem;
+      color: var(--accent2);
+      font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
 
-    /* ── CONTACT ── */
-    #contact { text-align: center; }
+    .gh-bar-track {
+      grid-column: 1 / -1;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(54, 35, 24, 0.85);
+      overflow: hidden;
+    }
+
+    .gh-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-deep), var(--accent), var(--accent2));
+    }
+
+    .gh-activity-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(54, 35, 24, 0.72);
+    }
+
+    .gh-activity-item:first-child {
+      padding-top: 0;
+    }
+
+    .gh-activity-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .gh-activity-msg {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      margin-bottom: 0.28rem;
+      line-height: 1.45;
+      transition: color 0.18s;
+    }
+
+    .gh-activity-msg:hover {
+      color: var(--accent2);
+    }
+
+    .gh-activity-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .gh-sha {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: var(--accent);
+    }
+
+    .gh-state-box {
+      padding: 1.35rem 1.25rem;
+      border: 1px dashed var(--border-strong);
+      border-radius: 4px;
+      background: rgba(19, 14, 11, 0.65);
+      color: var(--muted);
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .gh-skeleton-line {
+      height: 14px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, rgba(54, 35, 24, 0.55) 25%, rgba(92, 54, 32, 0.7) 50%, rgba(54, 35, 24, 0.55) 75%);
+      background-size: 200% 100%;
+      animation: ghShimmer 1.4s infinite linear;
+      margin-bottom: 0.65rem;
+    }
+
+    @keyframes ghShimmer {
+      from { background-position: 200% 0; }
+      to { background-position: -200% 0; }
+    }
+
+    /* ── CONTACT PAGE ── */
+    .contact-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem 2.25rem;
+    }
 
     .contact-desc {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--muted);
-      margin-bottom: 2.25rem;
+      max-width: 60ch;
+      margin-bottom: 2rem;
     }
 
     .contact-grid {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
+      margin-bottom: 1.75rem;
     }
 
     .contact-link {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
-      background: var(--surface);
+      gap: 0.75rem;
+      background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 0.9rem 1.4rem;
+      padding: 1rem 1.2rem;
+      min-height: 54px;
       text-decoration: none;
       color: var(--text);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      transition: all 0.22s;
+      transition: border-color 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
     }
 
     .contact-link:hover {
       border-color: var(--accent);
-      color: var(--accent);
-      box-shadow: 0 0 18px rgba(155,48,255,0.2);
+      color: var(--accent2);
+      box-shadow: 0 0 18px rgba(255, 106, 26, 0.18);
       transform: translateY(-2px);
     }
 
-    .contact-link svg { width: 17px; height: 17px; flex-shrink: 0; }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
+    .contact-link svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--accent);
     }
 
-    footer .henshin {
+    .contact-utility {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-availability {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .contact-availability strong {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* ── PAGE BOTTOM NAVIGATION ── */
+    .page-pager {
+      margin-top: 3.25rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pager-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-height: 44px;
+      padding: 0.55rem 1.1rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: border-color 0.18s, color 0.18s, transform 0.18s;
+    }
+
+    .pager-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent2);
+      transform: translateY(-1px);
+    }
+
+    .pager-btn.pager-next {
+      margin-left: auto;
+    }
+
+    /* ── SHARED FOOTER ── */
+    footer.site-footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      background: rgba(9, 6, 5, 0.78);
+      padding: 1.6rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .footer-brand {
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-brand .henshin {
       color: var(--accent);
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 620px) {
-      nav { padding: 0.85rem 1.2rem; }
-      .nav-links { gap: 1.1rem; font-size: 0.75rem; }
-      h1 { font-size: 2.2rem; }
-      .hero-cta { flex-direction: column; }
-      .btn { justify-content: center; }
-      .edu-card { flex-direction: column; }
+    .footer-right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.1rem;
     }
-  </style>
-</head>
-<body>
 
-  <!-- STARFIELD -->
-  <canvas id="star-canvas"></canvas>
+    .footer-credit a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">SAMUEL <span>COKER</span></div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Abilities</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Missions</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="https://github.com/SaikouTLS" target="_blank" rel="noopener">GitHub ↗</a></li>
-    </ul>
-  </nav>
+    .footer-credit a:hover {
+      text-decoration: underline;
+    }
 
-  <!-- HERO -->
-  <section id="hero" style="max-width:100%; padding-top:8rem;">
-    <div class="nebula-left" aria-hidden="true"></div>
-    <div class="nebula-right" aria-hidden="true"></div>
+    .replay-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 4px;
+      padding: 0.35rem 0.75rem;
+      min-height: 34px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.18s, color 0.18s;
+    }
 
-    <!-- Hex compound-eye overlay -->
-    <div class="hex-overlay" aria-hidden="true">
-      <svg width="100%" height="100%" viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="hexgrid" x="0" y="0" width="56" height="64" patternUnits="userSpaceOnUse">
-            <polygon points="28,3 53,17 53,47 28,61 3,47 3,17" fill="none" stroke="#9b30ff" stroke-width="1"/>
-          </pattern>
-        </defs>
-        <rect width="400" height="900" fill="url(#hexgrid)"/>
-      </svg>
-    </div>
+    .replay-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent2);
+    }
 
-    <!-- Rider helmet watermark -->
-    <svg class="rider-watermark" width="240" height="290" viewBox="0 0 240 290" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <ellipse cx="120" cy="128" rx="96" ry="105" fill="none" stroke="#9b30ff" stroke-width="3"/>
-      <ellipse cx="82" cy="112" rx="32" ry="20" fill="none" stroke="#9b30ff" stroke-width="2.5" transform="rotate(-14 82 112)"/>
-      <ellipse cx="158" cy="112" rx="32" ry="20" fill="none" stroke="#9b30ff" stroke-width="2.5" transform="rotate(14 158 112)"/>
-      <line x1="82" y1="93" x2="82" y2="131" stroke="#00f0ff" stroke-width="1.2"/>
-      <line x1="63" y1="112" x2="101" y2="112" stroke="#00f0ff" stroke-width="1.2"/>
-      <line x1="158" y1="93" x2="158" y2="131" stroke="#00f0ff" stroke-width="1.2"/>
-      <line x1="139" y1="112" x2="177" y2="112" stroke="#00f0ff" stroke-width="1.2"/>
-      <path d="M120 26 L97 62 L120 55 L143 62 Z" fill="none" stroke="#9b30ff" stroke-width="2.2"/>
-      <path d="M80 164 Q120 188 160 164" fill="none" stroke="#9b30ff" stroke-width="2.2"/>
-      <path d="M44 216 Q120 256 196 216 L210 248 Q120 282 30 248 Z" fill="none" stroke="#9b30ff" stroke-width="2"/>
-      <!-- belt energy core -->
-      <ellipse cx="120" cy="195" rx="18" ry="10" fill="none" stroke="#ffd060" stroke-width="1.5"/>
-      <ellipse cx="120" cy="195" rx="8" ry="4.5" fill="none" stroke="#ffd060" stroke-width="1"/>
-    </svg>
-
-    <div class="hero-inner">
-      <div class="rider-tag">Open to Opportunities</div>
-      <h1>
-        Samuel
-        <span class="gradient">Coker</span>
-      </h1>
-      <p class="hero-subtitle">Computer Science · Morgan State University · Class of 2026</p>
-      <p class="hero-desc">
-        Building at the intersection of hardware, software, and AI.
-        Detail-oriented, security-minded, and passionate about technology
-        that makes a real difference.
-      </p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">View Missions</a>
-        <a href="mailto:samuelcoker784@gmail.com" class="btn btn-outline">Get in Touch</a>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <p class="section-eyebrow">01 · Origin</p>
-    <h2>About Me</h2>
-    <p class="about-text">
-      I'm a CS graduate based in Aberdeen, MD with hands-on experience in hardware troubleshooting,
-      AI-powered app development, and technical support. I love breaking down complex systems —
-      whether that's diagnosing a failing component, building a therapy chatbot, or explaining
-      something technical to someone who's never touched a command line.
-    </p>
-    <p class="about-text" style="margin-top:1rem;">
-      Currently pursuing CompTIA Security+, A+, and Network+ certifications alongside my degree.
-      Graduated Summer 2026 and actively seeking roles in IT, software engineering, or cybersecurity.
-    </p>
-    <div class="stat-grid">
-      <div class="stat-card"><span class="stat-val">2026</span><span class="stat-key">Graduation</span></div>
-      <div class="stat-card"><span class="stat-val">2+</span><span class="stat-key">Projects</span></div>
-      <div class="stat-card"><span class="stat-val">3</span><span class="stat-key">Certs In Progress</span></div>
-      <div class="stat-card"><span class="stat-val">MD</span><span class="stat-key">Location</span></div>
-      <div class="stat-card"><span class="stat-val">✦</span><span class="stat-key">Available</span></div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ABILITIES / SKILLS -->
-  <section id="skills">
-    <p class="section-eyebrow">02 · Abilities</p>
-    <h2>Skills & Tools</h2>
-    <div class="abilities-grid">
-      <div class="ability-card">
-        <h3>Hardware & Infrastructure</h3>
-        <div class="skill-tags">
-          <span class="tag">PC Building/Repair</span>
-          <span class="tag">Troubleshooting</span>
-          <span class="tag">Peripheral Integration</span>
-          <span class="tag">Mobile Diagnostics</span>
-        </div>
-      </div>
-      <div class="ability-card">
-        <h3>Software & Databases</h3>
-        <div class="skill-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Flask</span>
-          <span class="tag">SQL</span>
-          <span class="tag">Firebase</span>
-          <span class="tag">Git</span>
-          <span class="tag">VS Code</span>
-        </div>
-      </div>
-      <div class="ability-card">
-        <h3>AI & Development</h3>
-        <div class="skill-tags">
-          <span class="tag">AI / ML</span>
-          <span class="tag">Computer Vision</span>
-          <span class="tag">Facial Recognition</span>
-          <span class="tag">NLP</span>
-          <span class="tag">REST APIs</span>
-        </div>
-      </div>
-      <div class="ability-card">
-        <h3>Systems</h3>
-        <div class="skill-tags">
-          <span class="tag">Windows</span>
-          <span class="tag">ChromeOS</span>
-          <span class="tag">Android</span>
-          <span class="tag">iOS</span>
-        </div>
-      </div>
-      <div class="ability-card">
-        <h3>Professional</h3>
-        <div class="skill-tags">
-          <span class="tag">Technical Triage</span>
-          <span class="tag">Problem Solving</span>
-          <span class="tag">Customer Service</span>
-          <span class="tag">End-User Training</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <p class="section-eyebrow">03 · Field Record</p>
-    <h2>Experience</h2>
-    <div class="timeline-item">
-      <p class="tl-org">Best Buy · Aberdeen, MD</p>
-      <p class="tl-role">Technical Support & Sales</p>
-      <p class="tl-date">2025 – Present</p>
-      <ul class="tl-body">
-        <li>Diagnose and resolve hardware, software, and connectivity issues across mobile devices and computing platforms.</li>
-        <li>Perform high-volume technical triage, prioritizing issues by severity and de-escalating stressful situations.</li>
-        <li>Manage device activations and user data securely, adhering to vendor and carrier privacy protocols.</li>
-        <li>Translate complex technical concepts into clear, actionable steps for non-technical customers.</li>
-      </ul>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- PROJECTS / MISSIONS -->
-  <section id="projects">
-    <p class="section-eyebrow">04 · Missions</p>
-    <h2>Projects</h2>
-    <div class="missions-grid">
-
-      <div class="mission-card">
-        <p class="mission-number">Mission 001 · AI · Computer Vision</p>
-        <span class="mission-type">★ Python / Flask</span>
-        <h3>Emotion-Aware Therapy Chatbot</h3>
-        <p>AI-powered chatbot that detects emotional states in real time via webcam and facial recognition, then responds with context-sensitive, therapeutic dialogue — bridging mental health support and computer vision.</p>
-        <div class="mission-tech">
-          <span>Python</span>
-          <span>Flask</span>
-          <span>Computer Vision</span>
-          <span>Facial Recognition</span>
-          <span>SQL</span>
-        </div>
-        <div class="mission-links">
-          <a href="https://github.com/SaikouTLS/emotion-therapist-chatbot" target="_blank" rel="noopener">→ GitHub</a>
-        </div>
-      </div>
-
-      <div class="mission-card">
-        <p class="mission-number">Mission 002 · Mobile · AI</p>
-        <span class="mission-type">★ Firebase / Python</span>
-        <h3>Healing Minds Mental Health App</h3>
-        <p>Mobile-focused mental health platform with mood tracking, guided resources, and AI-assisted check-ins — built with accessibility and user well-being at its core.</p>
-        <div class="mission-tech">
-          <span>Python</span>
-          <span>Firebase</span>
-          <span>AI</span>
-          <span>Flask</span>
-        </div>
-        <div class="mission-links">
-          <a href="https://github.com/SaikouTLS/Mental-Health-app-cosc-458-" target="_blank" rel="noopener">→ GitHub</a>
-        </div>
-      </div>
-
-      <div class="mission-card placeholder">
-        <div class="placeholder-icon">✦</div>
-        <p class="placeholder-text">More coming soon</p>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- CREDENTIALS -->
-  <section id="education">
-    <p class="section-eyebrow">05 · Credentials</p>
-    <h2>Education & Certifications</h2>
-
-    <div class="edu-card">
-      <div class="edu-emblem">🎓</div>
-      <div class="edu-info">
-        <h3>Morgan State University</h3>
-        <p class="edu-degree">Bachelor of Science in Computer Science</p>
-        <p class="edu-date">Baltimore, MD · Awarded Summer 2026</p>
-      </div>
-    </div>
-
-    <div class="cert-list">
-      <div class="cert-item">
-        <div class="cert-icon">🔒</div>
-        <div class="cert-info">
-          <h3>CompTIA Security+</h3>
-          <span>Cybersecurity fundamentals & threat management</span>
-        </div>
-        <span class="cert-badge">In Progress</span>
-      </div>
-      <div class="cert-item">
-        <div class="cert-icon">🖥</div>
-        <div class="cert-info">
-          <h3>CompTIA A+</h3>
-          <span>IT hardware, software & troubleshooting</span>
-        </div>
-        <span class="cert-badge">In Progress</span>
-      </div>
-      <div class="cert-item">
-        <div class="cert-icon">🌐</div>
-        <div class="cert-info">
-          <h3>CompTIA Network+</h3>
-          <span>Networking fundamentals & infrastructure</span>
-        </div>
-        <span class="cert-badge">In Progress</span>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <p class="section-eyebrow">06 · Link Up</p>
-    <h2>Get in Touch</h2>
-    <p class="contact-desc">Open to internships, entry-level roles, and interesting conversations.</p>
-    <div class="contact-grid">
-      <a href="mailto:samuelcoker784@gmail.com" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-        </svg>
-        samuelcoker784@gmail.com
-      </a>
-      <a href="https://linkedin.com/in/samuel-coker784/" target="_blank" rel="noopener" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-        </svg>
-        LinkedIn
-      </a>
-      <a href="https://github.com/SaikouTLS" target="_blank" rel="noopener" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
-        </svg>
-        github.com/SaikouTLS
-      </a>
-      <a href="tel:14106569052" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.05z"/>
-        </svg>
-        (410) 656-9052
-      </a>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2026 Samuel Coker &nbsp;·&nbsp; <span class="henshin">HENSHIN ✦</span></p>
-    <p style="font-size:0.7rem; margin-top:0.5rem;">Music: <a href="https://pixabay.com/music/beats-stardust-501206/" target="_blank" rel="noopener" style="color:var(--accent2); text-decoration:none;">Stardust</a> by <a href="https://pixabay.com/users/purrplecat-1947213/" target="_blank" rel="noopener" style="color:var(--accent2); text-decoration:none;">Purrple Cat</a> from Pixabay</p>
-  </footer>
-
-  <!-- MUSIC TOGGLE BUTTON -->
-  <style>
+    /* ── FLOATING MUSIC TOGGLE BUTTON ── */
     #music-btn {
       position: fixed;
       bottom: 1.5rem;
       left: 1.5rem;
       z-index: 200;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: rgba(14, 11, 28, 0.85);
+      background: rgba(19, 14, 11, 0.9);
       border: 1px solid var(--border);
       backdrop-filter: blur(10px);
       cursor: pointer;
@@ -1051,65 +1638,1469 @@
       align-items: center;
       justify-content: center;
       font-size: 1.1rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
       color: var(--muted);
+      transition: border-color 0.18s, box-shadow 0.18s, color 0.18s, transform 0.18s;
     }
+
     #music-btn:hover {
       border-color: var(--accent);
-      box-shadow: 0 0 14px rgba(155,48,255,0.3);
-      color: var(--accent);
-    }
-    #music-btn.playing {
-      border-color: var(--accent2);
-      box-shadow: 0 0 14px rgba(0,240,255,0.3);
+      box-shadow: 0 0 14px rgba(255, 106, 26, 0.35);
       color: var(--accent2);
-      animation: btn-pulse 3s ease-in-out infinite;
+      transform: translateY(-1px);
     }
-    @keyframes btn-pulse {
-      0%,100% { box-shadow: 0 0 10px rgba(0,240,255,0.2); }
-      50%      { box-shadow: 0 0 22px rgba(0,240,255,0.5); }
+
+    #music-btn.playing {
+      border-color: var(--accent);
+      box-shadow: 0 0 18px rgba(255, 106, 26, 0.45);
+      color: var(--accent2);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 820px) {
+      .nav-links,
+      .header-action {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+
+      .hero-highlights,
+      .gh-split {
+        grid-template-columns: 1fr;
+      }
+
+      .gh-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rider-watermark {
+        right: 1rem;
+        bottom: 1rem;
+        width: 185px;
+        height: 185px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .header-inner {
+        padding: 0 1.2rem;
+      }
+
+      .hero-stage {
+        padding: 2.5rem 1.25rem;
+      }
+
+      .page-container {
+        padding: 2.75rem 1.25rem 3.5rem;
+      }
+
+      .contact-panel {
+        padding: 1.75rem 1.3rem;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .hero-cta .btn {
+        width: 100%;
+      }
+
+      .cert-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #music-btn {
+        bottom: 1.15rem;
+        left: 1.15rem;
+      }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      #intro-overlay,
+      .page-view,
+      .intro-ring,
+      .intro-crest .crest-stroke,
+      .intro-crest .crest-eye,
+      .intro-crest .crest-core,
+      .btn,
+      .mission-card,
+      .ability-card,
+      .stat-card,
+      .gh-skeleton-line {
+        animation: none !important;
+        transition: none !important;
+      }
+      .intro-crest .crest-stroke,
+      .intro-crest .crest-eye {
+        stroke-dashoffset: 0;
+      }
+      .intro-crest .crest-core,
+      .intro-ring {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
-  <button id="music-btn" title="Toggle ambient music">♪</button>
+</head>
+<body>
 
-  <!-- Music: "Stardust" by Purrple Cat from Pixabay (Pixabay Content License — free for personal & commercial use, no attribution required) -->
-  <!-- Uploaded: purrplecat-stardust-501206.mp3 -->
+  <!-- PERSISTENT WARM STARFIELD -->
+  <canvas id="star-canvas" aria-hidden="true"></canvas>
+  <div class="nebula-layer" aria-hidden="true">
+    <div class="nebula-left"></div>
+    <div class="nebula-right"></div>
+  </div>
+
+  <!-- SOLAR EMBER HENSHIN BOOT SEQUENCE (ONCE PER SESSION) -->
+  <div id="intro-overlay" role="dialog" aria-modal="true" aria-label="Portfolio loading intro">
+    <button type="button" class="intro-skip" id="intro-skip-btn">Skip Intro</button>
+    <div class="intro-stage">
+      <div class="intro-crest-wrap" aria-hidden="true">
+        <div class="intro-ring"></div>
+        <svg class="intro-crest" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer Rider Seal Brackets -->
+          <path class="crest-stroke" d="M 44 76 L 26 124 L 48 182 L 92 216" fill="none" stroke="#ff6a1a" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" opacity="0.65"/>
+          <path class="crest-stroke" d="M 196 76 L 214 124 L 192 182 L 148 216" fill="none" stroke="#ff6a1a" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" opacity="0.65"/>
+          <line class="crest-stroke" x1="30" y1="124" x2="43" y2="124" stroke="#ffb347" stroke-width="2" opacity="0.7"/>
+          <line class="crest-stroke" x1="210" y1="124" x2="197" y2="124" stroke="#ffb347" stroke-width="2" opacity="0.7"/>
+
+          <!-- Swept Twin Rider V-Horns / Antennae -->
+          <path class="crest-stroke" d="M 110 86 L 52 20 L 74 72 L 48 54 L 84 98" fill="none" stroke="#ffb347" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+          <path class="crest-stroke" d="M 130 86 L 188 20 L 166 72 L 192 54 L 156 98" fill="none" stroke="#ffb347" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+
+          <!-- Angular Armored Helmet Plate -->
+          <path class="crest-stroke" d="M 120 74 L 164 90 L 184 124 L 172 172 L 142 204 L 120 220 L 98 204 L 68 172 L 56 124 L 76 90 Z" fill="rgba(19, 14, 11, 0.72)" stroke="#ff6a1a" stroke-width="3" stroke-linejoin="miter"/>
+          <line class="crest-stroke" x1="120" y1="98" x2="120" y2="162" stroke="#ff6a1a" stroke-width="2.4"/>
+
+          <!-- Slanted Compound Visor Eyes -->
+          <polygon class="crest-eye" points="64,114 112,132 104,154 72,146 60,128" fill="rgba(255, 179, 71, 0.16)" stroke="#ffb347" stroke-width="2.5" stroke-linejoin="miter"/>
+          <line class="crest-eye" x1="78" y1="120" x2="88" y2="150" stroke="#ffd27d" stroke-width="1.15" opacity="0.8"/>
+          <line class="crest-eye" x1="94" y1="126" x2="101" y2="152" stroke="#ffd27d" stroke-width="1.15" opacity="0.8"/>
+          <line class="crest-eye" x1="62" y1="128" x2="108" y2="143" stroke="#ffd27d" stroke-width="1.15" opacity="0.8"/>
+
+          <polygon class="crest-eye" points="176,114 128,132 136,154 168,146 180,128" fill="rgba(255, 179, 71, 0.16)" stroke="#ffb347" stroke-width="2.5" stroke-linejoin="miter"/>
+          <line class="crest-eye" x1="162" y1="120" x2="152" y2="150" stroke="#ffd27d" stroke-width="1.15" opacity="0.8"/>
+          <line class="crest-eye" x1="146" y1="126" x2="139" y2="152" stroke="#ffd27d" stroke-width="1.15" opacity="0.8"/>
+          <line class="crest-eye" x1="178" y1="128" x2="132" y2="143" stroke="#ffd27d" stroke-width="1.15" opacity="0.8"/>
+
+          <!-- Armored Crusher Jawplate & Chin Keel -->
+          <path class="crest-stroke" d="M 76 162 L 120 176 L 164 162" fill="none" stroke="#ff6a1a" stroke-width="2.4" stroke-linejoin="miter"/>
+          <polygon class="crest-stroke" points="86,174 112,184 108,202 94,190" fill="none" stroke="#ff6a1a" stroke-width="2" stroke-linejoin="miter"/>
+          <polygon class="crest-stroke" points="154,174 128,184 132,202 146,190" fill="none" stroke="#ff6a1a" stroke-width="2" stroke-linejoin="miter"/>
+          <polygon class="crest-stroke" points="120,180 128,198 120,214 112,198" fill="rgba(255, 106, 26, 0.2)" stroke="#ffb347" stroke-width="1.8"/>
+
+          <!-- Forehead Signal-O Crest Jewel -->
+          <g class="crest-core">
+            <polygon points="120,46 134,74 120,98 106,74" fill="rgba(255, 106, 26, 0.26)" stroke="#ffd27d" stroke-width="2"/>
+            <polygon points="120,58 127,74 120,88 113,74" fill="#ffb347" stroke="#ffd27d" stroke-width="1"/>
+          </g>
+        </svg>
+      </div>
+      <div class="intro-title">SAMUEL <span>COKER</span></div>
+      <div class="intro-kicker">HENSHIN ✦ IT &amp; Cybersecurity</div>
+      <div class="intro-progress-track" aria-hidden="true">
+        <div class="intro-progress-fill" id="intro-progress-fill"></div>
+      </div>
+      <div class="intro-meta">
+        <span>Loading portfolio</span>
+        <span id="intro-percent">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP NAVIGATION BAR (3-ZONE CONTRACT) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#/home" class="nav-logo" data-route="home">SAMUEL <span>COKER</span></a>
+
+      <nav aria-label="Primary navigation">
+        <ul class="nav-links">
+          <li><a href="#/home" data-route="home">Home</a></li>
+          <li><a href="#/about" data-route="about">About</a></li>
+          <li><a href="#/experience" data-route="experience">Experience</a></li>
+          <li><a href="#/missions" data-route="missions">Missions</a></li>
+          <li><a href="#/contact" data-route="contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a href="https://github.com/SaikouTLS" target="_blank" rel="noopener noreferrer" class="header-action">GitHub ↗</a>
+
+      <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <nav id="mobile-drawer" class="mobile-drawer" aria-label="Mobile navigation">
+    <a href="#/home" data-route="home">Home</a>
+    <a href="#/about" data-route="about">About</a>
+    <a href="#/experience" data-route="experience">Experience</a>
+    <a href="#/missions" data-route="missions">Missions</a>
+    <a href="#/contact" data-route="contact">Contact</a>
+    <a href="https://github.com/SaikouTLS" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+  </nav>
+
+  <!-- ROUTED 5-PAGE OUTLET -->
+  <main id="page-outlet">
+
+    <!-- PAGE 1: HOME -->
+    <section class="page-view" data-page="home" aria-label="Home">
+      <div class="hero-stage">
+        <div class="hex-overlay" aria-hidden="true">
+          <svg width="100%" height="100%" viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hexgrid" x="0" y="0" width="56" height="64" patternUnits="userSpaceOnUse">
+                <polygon points="28,3 53,17 53,47 28,61 3,47 3,17" fill="none" stroke="#ff6a1a" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="900" fill="url(#hexgrid)"/>
+          </svg>
+        </div>
+
+        <svg class="rider-watermark" width="260" height="260" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M 44 76 L 26 124 L 48 182 L 92 216" fill="none" stroke="#ff6a1a" stroke-width="2.2" opacity="0.65"/>
+          <path d="M 196 76 L 214 124 L 192 182 L 148 216" fill="none" stroke="#ff6a1a" stroke-width="2.2" opacity="0.65"/>
+          <path d="M 110 86 L 52 20 L 74 72 L 48 54 L 84 98" fill="none" stroke="#ffb347" stroke-width="3"/>
+          <path d="M 130 86 L 188 20 L 166 72 L 192 54 L 156 98" fill="none" stroke="#ffb347" stroke-width="3"/>
+          <path d="M 120 74 L 164 90 L 184 124 L 172 172 L 142 204 L 120 220 L 98 204 L 68 172 L 56 124 L 76 90 Z" fill="none" stroke="#ff6a1a" stroke-width="3"/>
+          <line x1="120" y1="98" x2="120" y2="162" stroke="#ff6a1a" stroke-width="2.4"/>
+          <polygon points="64,114 112,132 104,154 72,146 60,128" fill="none" stroke="#ffb347" stroke-width="2.5"/>
+          <polygon points="176,114 128,132 136,154 168,146 180,128" fill="none" stroke="#ffb347" stroke-width="2.5"/>
+          <path d="M 76 162 L 120 176 L 164 162" fill="none" stroke="#ff6a1a" stroke-width="2.4"/>
+          <polygon points="86,174 112,184 108,202 94,190" fill="none" stroke="#ff6a1a" stroke-width="2"/>
+          <polygon points="154,174 128,184 132,202 146,190" fill="none" stroke="#ff6a1a" stroke-width="2"/>
+          <polygon points="120,180 128,198 120,214 112,198" fill="none" stroke="#ffb347" stroke-width="1.8"/>
+          <polygon points="120,46 134,74 120,98 106,74" fill="none" stroke="#ffd27d" stroke-width="2"/>
+        </svg>
+
+        <div class="hero-inner">
+          <p class="hero-availability">
+            <span>Open to IT &amp; Cybersecurity Roles</span>
+            <span class="sep" aria-hidden="true">·</span>
+            <span class="loc">Aberdeen, MD</span>
+          </p>
+          <h1>
+            Samuel
+            <span class="gradient">Coker</span>
+          </h1>
+          <p class="hero-subtitle">IT Support · Cybersecurity · Computer Science '26</p>
+          <p class="hero-desc">
+            Hands-on IT specialist and security-minded Computer Science graduate focused on
+            hardware diagnostics, endpoint troubleshooting, technical triage, and protecting
+            user data across everyday systems.
+          </p>
+          <div class="hero-cta">
+            <a href="#/experience" data-route="experience" class="btn btn-primary">View Experience &amp; Certs</a>
+            <a href="#/contact" data-route="contact" class="btn btn-outline">Get in Touch</a>
+          </div>
+          <div class="hero-highlights">
+            <div class="hero-metric">
+              <div class="hero-metric-val">CompTIA Track</div>
+              <div class="hero-metric-label">Security+, A+, and Network+ in progress</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hero-metric-val">Best Buy Tech</div>
+              <div class="hero-metric-label">High-volume hardware &amp; device triage</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hero-metric-val">Morgan State '26</div>
+              <div class="hero-metric-label">B.S. in Computer Science graduate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: ABOUT & CAPABILITIES -->
+    <section class="page-view" data-page="about" aria-label="About">
+      <div class="page-container">
+        <div class="section-block">
+          <p class="section-eyebrow">01 · Origin</p>
+          <h2>About Me</h2>
+          <p class="about-text">
+            I'm an IT and cybersecurity-focused Computer Science graduate based in Aberdeen, MD with hands-on
+            experience in <strong>hardware diagnostics, device repair, technical triage, and user support</strong>.
+            My strength lies in breaking down practical system failures—identifying faulty components, securing
+            device activations and user privacy, and guiding non-technical users through clear, step-by-step fixes.
+          </p>
+          <p class="about-text">
+            While my Morgan State CS degree gave me a solid technical foundation across databases and scripting,
+            my career focus is squarely on <strong>IT Support, Help Desk, Systems Administration, and Cybersecurity</strong>.
+            I am actively pursuing CompTIA Security+, A+, and Network+ certifications to deepen my defense and
+            infrastructure toolkit.
+          </p>
+
+          <div class="stat-grid">
+            <div class="stat-card"><span class="stat-val">3</span><span class="stat-key">CompTIA Certs</span></div>
+            <div class="stat-card"><span class="stat-val">2026</span><span class="stat-key">B.S. Computer Science</span></div>
+            <div class="stat-card"><span class="stat-val">IT / Sec</span><span class="stat-key">Primary Focus</span></div>
+            <div class="stat-card"><span class="stat-val">MD</span><span class="stat-key">Aberdeen, USA</span></div>
+            <div class="stat-card"><span class="stat-val">Open</span><span class="stat-key">Available Now</span></div>
+          </div>
+        </div>
+
+        <div class="section-block">
+          <p class="section-eyebrow">02 · Capabilities</p>
+          <h2>IT &amp; Security Toolkit</h2>
+          <div class="abilities-grid">
+            <div class="ability-card">
+              <h3>Cybersecurity &amp; CompTIA</h3>
+              <ul class="ability-list">
+                <li>Security+ Concepts &amp; Threat Awareness</li>
+                <li>Data Privacy &amp; Carrier Protocols</li>
+                <li>Endpoint Hygiene &amp; Access Control</li>
+                <li>Network+ Infrastructure Fundamentals</li>
+              </ul>
+            </div>
+            <div class="ability-card">
+              <h3>IT Support &amp; Hardware</h3>
+              <ul class="ability-list">
+                <li>PC Building, Upgrades &amp; Repair</li>
+                <li>Hardware &amp; Connectivity Diagnostics</li>
+                <li>Mobile &amp; Peripheral Integration</li>
+                <li>Severity-Based Technical Triage</li>
+              </ul>
+            </div>
+            <div class="ability-card">
+              <h3>Operating Systems</h3>
+              <ul class="ability-list">
+                <li>Windows Desktop Troubleshooting</li>
+                <li>ChromeOS Administration Basics</li>
+                <li>Android &amp; iOS Diagnostics</li>
+                <li>Secure Device Provisioning</li>
+              </ul>
+            </div>
+            <div class="ability-card">
+              <h3>Operations &amp; People</h3>
+              <ul class="ability-list">
+                <li>High-Volume Support Triage</li>
+                <li>Customer De-Escalation</li>
+                <li>End-User Security Education</li>
+                <li>Plain-Language Troubleshooting</li>
+              </ul>
+            </div>
+            <div class="ability-card">
+              <h3>Foundational Tech Tools</h3>
+              <ul class="ability-list">
+                <li>Python Scripting Basics</li>
+                <li>SQL &amp; Database Fundamentals</li>
+                <li>Firebase &amp; Cloud Basics</li>
+                <li>Git &amp; VS Code</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-pager">
+          <a href="#/home" data-route="home" class="pager-btn">← Home</a>
+          <a href="#/experience" data-route="experience" class="pager-btn pager-next">Next: Experience →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: EXPERIENCE & CREDENTIALS -->
+    <section class="page-view" data-page="experience" aria-label="Experience and Credentials">
+      <div class="page-container">
+        <div class="section-block">
+          <p class="section-eyebrow">03 · Field Record</p>
+          <h2>Hands-On Experience</h2>
+          <article class="timeline-item">
+            <div class="tl-header">
+              <div>
+                <p class="tl-org">Best Buy · Aberdeen, MD</p>
+                <h3 class="tl-role">Technical Support &amp; Sales</h3>
+              </div>
+              <p class="tl-date">2025 – Present</p>
+            </div>
+            <ul class="tl-body">
+              <li>Diagnose and resolve hardware, operating system, and connectivity issues across computing platforms and mobile endpoints.</li>
+              <li>Execute high-volume technical triage, prioritizing tickets by severity while de-escalating stressful customer situations.</li>
+              <li>Handle device activations, account transfers, and user data securely in strict alignment with vendor and carrier privacy protocols.</li>
+              <li>Translate complex security and troubleshooting concepts into clear, repeatable steps for non-technical end users.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-block">
+          <p class="section-eyebrow">04 · Credentials</p>
+          <h2>Certifications &amp; Education</h2>
+
+          <div class="cert-list">
+            <div class="cert-item">
+              <div class="cert-info">
+                <h3>CompTIA Security+</h3>
+                <p>Cybersecurity fundamentals, threat analysis, access management, and operational security</p>
+              </div>
+              <span class="cert-status">In Progress</span>
+            </div>
+            <div class="cert-item">
+              <div class="cert-info">
+                <h3>CompTIA A+</h3>
+                <p>IT hardware servicing, operating system troubleshooting, and help desk operations</p>
+              </div>
+              <span class="cert-status">In Progress</span>
+            </div>
+            <div class="cert-item">
+              <div class="cert-info">
+                <h3>CompTIA Network+</h3>
+                <p>Networking protocols, routing fundamentals, connectivity diagnostics, and network security</p>
+              </div>
+              <span class="cert-status">In Progress</span>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-info">
+              <h3>Morgan State University</h3>
+              <p class="edu-degree">Bachelor of Science in Computer Science · Baltimore, MD</p>
+            </div>
+            <p class="edu-date">Awarded August 2026</p>
+          </div>
+        </div>
+
+        <div class="page-pager">
+          <a href="#/about" data-route="about" class="pager-btn">← About</a>
+          <a href="#/missions" data-route="missions" class="pager-btn pager-next">Next: Missions →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: MISSIONS / PROJECTS -->
+    <section class="page-view" data-page="missions" aria-label="Missions and Projects">
+      <div class="page-container">
+        <div class="section-block">
+          <div class="missions-header">
+            <div>
+              <p class="section-eyebrow">05 · Missions</p>
+              <h2>Applied Projects &amp; Labs</h2>
+            </div>
+
+            <div class="filter-bar" role="group" aria-label="Filter missions by category">
+              <button type="button" class="filter-btn is-active" data-filter="all">All</button>
+              <button type="button" class="filter-btn" data-filter="capstone">Applied Capstone</button>
+              <button type="button" class="filter-btn" data-filter="labs">IT &amp; Security Labs</button>
+            </div>
+          </div>
+
+          <p class="missions-lead">
+            University capstone systems built during my Computer Science degree alongside upcoming
+            hands-on IT and cybersecurity lab documentation supporting my CompTIA certification track.
+          </p>
+
+          <div class="missions-grid" id="missions-grid">
+            <article class="mission-card" data-category="capstone">
+              <p class="mission-meta">Mission 001 · Applied Capstone · Systems &amp; AI</p>
+              <h3>Emotion-Aware Therapy Chatbot</h3>
+              <p class="mission-desc">
+                Capstone web system integrating real-time webcam emotion detection with context-aware
+                conversational responses, pairing Python backend services with structured SQL data handling.
+              </p>
+              <p class="mission-stack"><strong>Tools:</strong> Python · Flask · Computer Vision · SQL</p>
+              <div class="mission-links">
+                <a href="https://github.com/SaikouTLS/emotion-therapist-chatbot" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a>
+              </div>
+            </article>
+
+            <article class="mission-card" data-category="capstone">
+              <p class="mission-meta">Mission 002 · Applied Capstone · Mobile &amp; Cloud</p>
+              <h3>Healing Minds Mental Health App</h3>
+              <p class="mission-desc">
+                Accessible mobile mental health platform combining mood tracking, curated support resources,
+                and Firebase-backed user data workflows designed around reliability and user well-being.
+              </p>
+              <p class="mission-stack"><strong>Tools:</strong> Python · Firebase · Flask · Cloud Auth</p>
+              <div class="mission-links">
+                <a href="https://github.com/SaikouTLS/Mental-Health-app-cosc-458-" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a>
+              </div>
+            </article>
+
+            <article class="mission-card upcoming" data-category="labs">
+              <p class="mission-meta">Mission 003 · IT &amp; Security Labs · In Development</p>
+              <h3>CompTIA Home Lab &amp; Network Diagnostics</h3>
+              <p class="mission-desc">
+                Upcoming documentation of hands-on virtual lab exercises covering Windows hardening,
+                network packet analysis, firewall rules, and structured help desk troubleshooting runbooks.
+              </p>
+              <p class="mission-stack"><strong>Focus:</strong> Security+ · Network+ · Endpoint Hardening</p>
+              <div class="mission-links">
+                <a href="#/experience" data-route="experience">View CompTIA Track →</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="section-block" id="github-live-section" aria-live="polite">
+          <div class="gh-header">
+            <div>
+              <p class="section-eyebrow">GitHub Live · @SaikouTLS</p>
+              <h2>Repository Activity &amp; Contributions</h2>
+            </div>
+            <div class="gh-actions">
+              <button type="button" class="gh-utility-btn" id="gh-refresh-btn">Refresh Data</button>
+              <a href="https://github.com/SaikouTLS" target="_blank" rel="noopener noreferrer" class="gh-utility-btn">Open GitHub ↗</a>
+            </div>
+          </div>
+
+          <div class="gh-summary-grid" id="gh-summary-grid">
+            <div class="gh-stat-card">
+              <div class="gh-stat-val" id="gh-stat-repos">—</div>
+              <div class="gh-stat-label">Public Repositories</div>
+            </div>
+            <div class="gh-stat-card">
+              <div class="gh-stat-val" id="gh-stat-contribs">—</div>
+              <div class="gh-stat-label">Recent Commits &amp; Events</div>
+            </div>
+            <div class="gh-stat-card">
+              <div class="gh-stat-val" id="gh-stat-stars">—</div>
+              <div class="gh-stat-label">Total Repository Stars</div>
+            </div>
+            <div class="gh-stat-card">
+              <div class="gh-stat-val" id="gh-stat-latest">—</div>
+              <div class="gh-stat-label">Latest Repository Push</div>
+            </div>
+          </div>
+
+          <div class="gh-split">
+            <div class="gh-panel">
+              <div class="gh-panel-head">
+                <h3 class="gh-panel-title">Public Repositories</h3>
+                <div class="filter-bar" role="group" aria-label="Filter GitHub repositories">
+                  <button type="button" class="filter-btn is-active" data-gh-filter="all">All</button>
+                  <button type="button" class="filter-btn" data-gh-filter="source">Original</button>
+                  <button type="button" class="filter-btn" data-gh-filter="fork">Forks</button>
+                </div>
+              </div>
+              <div class="gh-repo-list" id="gh-repo-list"></div>
+            </div>
+
+            <div class="gh-panel">
+              <div class="gh-panel-head">
+                <h3 class="gh-panel-title">Latest Activity &amp; Contributions</h3>
+                <span class="gh-panel-sub" id="gh-sync-label">Connecting to GitHub…</span>
+              </div>
+              <div id="gh-contrib-breakdown"></div>
+              <div class="gh-activity-list" id="gh-activity-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-pager">
+          <a href="#/experience" data-route="experience" class="pager-btn">← Experience</a>
+          <a href="#/contact" data-route="contact" class="pager-btn pager-next">Next: Contact →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: CONTACT -->
+    <section class="page-view" data-page="contact" aria-label="Contact">
+      <div class="page-container">
+        <p class="section-eyebrow">06 · Link Up</p>
+        <h2>Get in Touch</h2>
+
+        <div class="contact-panel">
+          <p class="contact-desc">
+            Actively seeking entry-level opportunities in <strong>IT Support, Help Desk, Systems Technician,
+            and Cybersecurity</strong> roles. Reach out directly through any channel below.
+          </p>
+
+          <div class="contact-grid">
+            <a href="mailto:samuelcoker784@gmail.com" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+              <span>samuelcoker784@gmail.com</span>
+            </a>
+            <a href="https://linkedin.com/in/samuel-coker784/" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+              </svg>
+              <span>LinkedIn Profile ↗</span>
+            </a>
+            <a href="https://github.com/SaikouTLS" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+              <span>github.com/SaikouTLS ↗</span>
+            </a>
+            <a href="tel:14106569052" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.05z"/>
+              </svg>
+              <span>(410) 656-9052</span>
+            </a>
+          </div>
+
+          <div class="contact-utility">
+            <p class="contact-availability">
+              <strong>Available</strong> · Based in Aberdeen, MD · Open to on-site, hybrid, and remote IT &amp; security roles
+            </p>
+            <button type="button" class="btn btn-outline" id="copy-email-btn">Copy Email Address</button>
+          </div>
+        </div>
+
+        <div class="page-pager">
+          <a href="#/missions" data-route="missions" class="pager-btn">← Missions</a>
+          <a href="#/home" data-route="home" class="pager-btn pager-next">Back to Home →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SHARED FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">© 2026 Samuel Coker &nbsp;·&nbsp; <span class="henshin">HENSHIN ✦</span></p>
+      <div class="footer-right">
+        <p class="footer-credit">
+          Music: <a href="https://pixabay.com/music/beats-stardust-501206/" target="_blank" rel="noopener noreferrer">Stardust</a>
+          by <a href="https://pixabay.com/users/purrplecat-1947213/" target="_blank" rel="noopener noreferrer">Purrple Cat</a>
+        </p>
+        <button type="button" class="replay-btn" id="replay-intro-btn">Replay Intro</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PERSISTENT AMBIENT MUSIC TOGGLE -->
+  <button type="button" id="music-btn" title="Play ambient music" aria-label="Toggle ambient music" aria-pressed="false">♪</button>
+
   <script>
-    // ── BACKGROUND MUSIC (Purrple Cat – Stardust via Pixabay) ────────────────
     (() => {
-      const btn   = document.getElementById('music-btn');
+      // ── 1. PERSISTENT BACKGROUND MUSIC (Stardust by Purrple Cat) ─────────────
+      const musicBtn = document.getElementById('music-btn');
       const audio = new Audio('purrplecat-stardust-501206.mp3');
-      audio.loop   = true;
+      audio.loop = true;
       audio.volume = 0.35;
 
-      btn.addEventListener('click', () => {
+      musicBtn.addEventListener('click', () => {
         if (audio.paused) {
-          audio.play();
-          btn.classList.add('playing');
-          btn.title = 'Pause music';
+          audio.play().then(() => {
+            musicBtn.classList.add('playing');
+            musicBtn.title = 'Pause ambient music';
+            musicBtn.setAttribute('aria-pressed', 'true');
+          }).catch(() => {});
         } else {
           audio.pause();
-          btn.classList.remove('playing');
-          btn.title = 'Play music';
+          musicBtn.classList.remove('playing');
+          musicBtn.title = 'Play ambient music';
+          musicBtn.setAttribute('aria-pressed', 'false');
         }
       });
-    })();
 
-    // ── STARFIELD ────────────────────────────────────────────────────────────
-    (() => {
+      // ── 2. SOLAR EMBER HENSHIN INTRO (ONCE PER SESSION + REPLAY) ─────────────
+      const INTRO_KEY = 'sc_intro_seen';
+      const introOverlay = document.getElementById('intro-overlay');
+      const introSkipBtn = document.getElementById('intro-skip-btn');
+      const replayIntroBtn = document.getElementById('replay-intro-btn');
+      const introProgressFill = document.getElementById('intro-progress-fill');
+      const introPercent = document.getElementById('intro-percent');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let introRafId = null;
+      let introDismissTimer = null;
+
+      function cancelIntroTimers() {
+        if (introRafId !== null) {
+          cancelAnimationFrame(introRafId);
+          introRafId = null;
+        }
+        if (introDismissTimer !== null) {
+          clearTimeout(introDismissTimer);
+          introDismissTimer = null;
+        }
+      }
+
+      function dismissIntro() {
+        cancelIntroTimers();
+        introOverlay.classList.add('is-hidden');
+        document.body.classList.remove('intro-lock');
+        try {
+          sessionStorage.setItem(INTRO_KEY, '1');
+        } catch (_) {}
+      }
+
+      function playIntro(force = false) {
+        let alreadySeen = false;
+        try {
+          alreadySeen = sessionStorage.getItem(INTRO_KEY) === '1';
+        } catch (_) {}
+
+        if (!force && (alreadySeen || prefersReducedMotion)) {
+          introOverlay.classList.add('is-hidden');
+          document.body.classList.remove('intro-lock');
+          return;
+        }
+
+        cancelIntroTimers();
+
+        // Reset SVG & ring animations cleanly on replay
+        const crestWrap = introOverlay.querySelector('.intro-crest-wrap');
+        if (force && crestWrap) {
+          const clone = crestWrap.cloneNode(true);
+          crestWrap.replaceWith(clone);
+        }
+
+        introProgressFill.style.transform = 'scaleX(0)';
+        introPercent.textContent = '0%';
+        introOverlay.classList.remove('is-hidden');
+        document.body.classList.add('intro-lock');
+
+        if (prefersReducedMotion) {
+          introProgressFill.style.transform = 'scaleX(1)';
+          introPercent.textContent = '100%';
+          introDismissTimer = setTimeout(dismissIntro, 650);
+          return;
+        }
+
+        const durationMs = 2150;
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const t = Math.min(elapsed / durationMs, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          introProgressFill.style.transform = `scaleX(${eased})`;
+          introPercent.textContent = `${Math.round(eased * 100)}%`;
+
+          if (t < 1) {
+            introRafId = requestAnimationFrame(step);
+          } else {
+            introDismissTimer = setTimeout(dismissIntro, 260);
+          }
+        }
+
+        introRafId = requestAnimationFrame(step);
+      }
+
+      introSkipBtn.addEventListener('click', dismissIntro);
+      replayIntroBtn.addEventListener('click', () => playIntro(true));
+
+      // ── 3. HASH ROUTER & SMOOTH FADE TRANSITIONS ─────────────────────────────
+      const ROUTE_TITLES = {
+        home: 'Samuel Coker — IT & Cybersecurity Portfolio',
+        about: 'About & Toolkit — Samuel Coker',
+        experience: 'Experience & Certifications — Samuel Coker',
+        missions: 'Missions & Labs — Samuel Coker',
+        contact: 'Contact — Samuel Coker',
+      };
+
+      const LEGACY_MAP = {
+        hero: 'home',
+        skills: 'about',
+        abilities: 'about',
+        education: 'experience',
+        credentials: 'experience',
+        projects: 'missions',
+      };
+
+      const pages = Array.from(document.querySelectorAll('.page-view'));
+      const navLinks = Array.from(document.querySelectorAll('a[data-route]'));
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileDrawer = document.getElementById('mobile-drawer');
+
+      let currentRoute = null;
+      let fadeTimer = null;
+
+      function closeMobileMenu() {
+        mobileDrawer.classList.remove('open');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      function toggleMobileMenu() {
+        const isOpen = mobileDrawer.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+      }
+
+      mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          if (mobileDrawer.classList.contains('open')) {
+            closeMobileMenu();
+            mobileMenuBtn.focus();
+          } else if (!introOverlay.classList.contains('is-hidden')) {
+            dismissIntro();
+          }
+        }
+      });
+
+      function parseRouteFromHash() {
+        const raw = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
+        if (!raw) return 'home';
+        if (ROUTE_TITLES[raw]) return raw;
+        if (LEGACY_MAP[raw]) return LEGACY_MAP[raw];
+        return 'home';
+      }
+
+      function updateActiveNav(route) {
+        navLinks.forEach((link) => {
+          if (link.dataset.route === route && (link.closest('.nav-links') || link.closest('#mobile-drawer'))) {
+            link.setAttribute('aria-current', 'page');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      function renderRoute(nextRoute, instant = false) {
+        if (currentRoute === nextRoute && !instant) {
+          closeMobileMenu();
+          return;
+        }
+
+        clearTimeout(fadeTimer);
+        closeMobileMenu();
+
+        const previousEl = currentRoute
+          ? pages.find((el) => el.dataset.page === currentRoute)
+          : null;
+        const nextEl = pages.find((el) => el.dataset.page === nextRoute) || pages[0];
+
+        currentRoute = nextRoute;
+        document.title = ROUTE_TITLES[nextRoute] || ROUTE_TITLES.home;
+        updateActiveNav(nextRoute);
+        if (nextRoute === 'missions') {
+          ensureGitHubLoaded();
+        }
+
+        const activateNext = () => {
+          pages.forEach((el) => {
+            if (el !== nextEl) {
+              el.classList.remove('is-active', 'is-visible');
+            }
+          });
+          nextEl.classList.add('is-active');
+          window.scrollTo({ top: 0, behavior: 'auto' });
+
+          if (instant || prefersReducedMotion) {
+            nextEl.classList.add('is-visible');
+          } else {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                nextEl.classList.add('is-visible');
+              });
+            });
+          }
+        };
+
+        if (!previousEl || instant || prefersReducedMotion) {
+          activateNext();
+        } else {
+          previousEl.classList.remove('is-visible');
+          fadeTimer = setTimeout(activateNext, 160);
+        }
+      }
+
+      document.addEventListener('click', (event) => {
+        const link = event.target.closest('a[data-route]');
+        if (!link) return;
+        const route = link.dataset.route;
+        if (!ROUTE_TITLES[route]) return;
+        event.preventDefault();
+        const targetHash = `#/${route}`;
+        if (window.location.hash !== targetHash) {
+          window.location.hash = targetHash;
+        } else {
+          renderRoute(route);
+        }
+      });
+
+      window.addEventListener('hashchange', () => {
+        renderRoute(parseRouteFromHash());
+      });
+
+      // ── 4. MISSIONS CATEGORY FILTER ──────────────────────────────────────────
+      const filterButtons = Array.from(document.querySelectorAll('.filter-btn[data-filter]'));
+      const missionCards = Array.from(document.querySelectorAll('#missions-grid .mission-card'));
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const selected = btn.dataset.filter;
+          filterButtons.forEach((b) => b.classList.toggle('is-active', b === btn));
+          missionCards.forEach((card) => {
+            const matches = selected === 'all' || card.dataset.category === selected;
+            card.classList.toggle('is-filtered-out', !matches);
+          });
+        });
+      });
+
+      // ── 4B. LIVE GITHUB API (SaikouTLS REPOSITORIES & CONTRIBUTIONS) ─────────
+      const GH_USER = 'SaikouTLS';
+      const GH_CACHE_KEY = 'sc_gh_live_v1';
+      const GH_CACHE_TTL_MS = 10 * 60 * 1000;
+      const GH_HEADERS = { Accept: 'application/vnd.github+json' };
+
+      const ghRefreshBtn = document.getElementById('gh-refresh-btn');
+      const ghStatRepos = document.getElementById('gh-stat-repos');
+      const ghStatContribs = document.getElementById('gh-stat-contribs');
+      const ghStatStars = document.getElementById('gh-stat-stars');
+      const ghStatLatest = document.getElementById('gh-stat-latest');
+      const ghSyncLabel = document.getElementById('gh-sync-label');
+      const ghRepoList = document.getElementById('gh-repo-list');
+      const ghContribBreakdown = document.getElementById('gh-contrib-breakdown');
+      const ghActivityList = document.getElementById('gh-activity-list');
+      const ghFilterButtons = Array.from(document.querySelectorAll('.filter-btn[data-gh-filter]'));
+
+      let ghState = {
+        loaded: false,
+        loading: false,
+        repoFilter: 'all',
+        data: null,
+      };
+
+      function safeGitHubUrl(rawUrl, fallback = `https://github.com/${GH_USER}`) {
+        try {
+          const parsed = new URL(rawUrl);
+          if (parsed.protocol === 'https:' && parsed.hostname === 'github.com') {
+            return parsed.href;
+          }
+        } catch (_) {}
+        return fallback;
+      }
+
+      function formatShortDate(iso) {
+        if (!iso) return '—';
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return '—';
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      function formatRelativeTime(iso) {
+        if (!iso) return '';
+        const diffMs = Date.now() - new Date(iso).getTime();
+        if (Number.isNaN(diffMs) || diffMs < 0) return formatShortDate(iso);
+        const mins = Math.floor(diffMs / 60000);
+        if (mins < 60) return `${Math.max(1, mins)}m ago`;
+        const hours = Math.floor(mins / 60);
+        if (hours < 24) return `${hours}h ago`;
+        const days = Math.floor(hours / 24);
+        if (days < 30) return `${days}d ago`;
+        return formatShortDate(iso);
+      }
+
+      function renderSkeletons(container, rows = 4) {
+        container.textContent = '';
+        for (let i = 0; i < rows; i++) {
+          const item = document.createElement('div');
+          item.className = 'gh-repo-item';
+          const line1 = document.createElement('div');
+          line1.className = 'gh-skeleton-line';
+          line1.style.width = `${55 + (i % 3) * 14}%`;
+          const line2 = document.createElement('div');
+          line2.className = 'gh-skeleton-line';
+          line2.style.width = `${82 - (i % 2) * 18}%`;
+          line2.style.height = '11px';
+          item.append(line1, line2);
+          container.appendChild(item);
+        }
+      }
+
+      function renderGitHubLoading() {
+        ghRefreshBtn.disabled = true;
+        ghRefreshBtn.textContent = 'Syncing…';
+        ghSyncLabel.textContent = 'Fetching live GitHub data…';
+        ghContribBreakdown.textContent = '';
+        renderSkeletons(ghRepoList, 4);
+        renderSkeletons(ghActivityList, 5);
+      }
+
+      function renderGitHubError(message) {
+        ghRefreshBtn.disabled = false;
+        ghRefreshBtn.textContent = 'Refresh Data';
+        ghSyncLabel.textContent = 'Unable to sync';
+        ghContribBreakdown.textContent = '';
+
+        [ghRepoList, ghActivityList].forEach((container) => {
+          container.textContent = '';
+          const box = document.createElement('div');
+          box.className = 'gh-state-box';
+
+          const p = document.createElement('p');
+          p.textContent = message;
+
+          const row = document.createElement('div');
+          row.className = 'gh-actions';
+
+          const retryBtn = document.createElement('button');
+          retryBtn.type = 'button';
+          retryBtn.className = 'gh-utility-btn';
+          retryBtn.textContent = 'Retry';
+          retryBtn.addEventListener('click', () => loadGitHubData(true));
+
+          const link = document.createElement('a');
+          link.className = 'gh-utility-btn';
+          link.href = `https://github.com/${GH_USER}`;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = 'View on GitHub ↗';
+
+          row.append(retryBtn, link);
+          box.append(p, row);
+          container.appendChild(box);
+        });
+      }
+
+      function renderReposList() {
+        if (!ghState.data) return;
+        const allRepos = ghState.data.repos || [];
+        const filtered = allRepos.filter((repo) => {
+          if (ghState.repoFilter === 'source') return !repo.fork;
+          if (ghState.repoFilter === 'fork') return Boolean(repo.fork);
+          return true;
+        });
+
+        ghRepoList.textContent = '';
+        if (filtered.length === 0) {
+          const box = document.createElement('div');
+          box.className = 'gh-state-box';
+          const p = document.createElement('p');
+          p.textContent = 'No repositories match this filter.';
+          box.appendChild(p);
+          ghRepoList.appendChild(box);
+          return;
+        }
+
+        filtered.forEach((repo) => {
+          const item = document.createElement('article');
+          item.className = 'gh-repo-item';
+
+          const top = document.createElement('div');
+          top.className = 'gh-repo-top';
+
+          const link = document.createElement('a');
+          link.className = 'gh-repo-link';
+          link.href = safeGitHubUrl(repo.html_url);
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = `${repo.name} ↗`;
+
+          const stats = document.createElement('span');
+          stats.className = 'gh-repo-stats';
+          stats.textContent = `★ ${repo.stargazers_count || 0} · Forks ${repo.forks_count || 0}`;
+
+          top.append(link, stats);
+
+          const desc = document.createElement('p');
+          desc.className = 'gh-repo-desc';
+          desc.textContent = repo.description || 'Public repository under @SaikouTLS.';
+
+          const meta = document.createElement('p');
+          meta.className = 'gh-repo-meta';
+          const parts = [];
+          if (repo.language) parts.push(repo.language);
+          parts.push(repo.fork ? 'Forked' : 'Original');
+          if (repo.pushed_at) parts.push(`Pushed ${formatShortDate(repo.pushed_at)}`);
+          meta.textContent = parts.join(' · ');
+
+          item.append(top, desc, meta);
+          ghRepoList.appendChild(item);
+        });
+      }
+
+      function renderActivityFeed() {
+        if (!ghState.data) return;
+        const activities = ghState.data.activities || [];
+
+        // Contribution breakdown by repository (from real live fetched items)
+        ghContribBreakdown.textContent = '';
+        if (activities.length > 0) {
+          const counts = new Map();
+          activities.forEach((act) => {
+            counts.set(act.repo, (counts.get(act.repo) || 0) + 1);
+          });
+          const sortedCounts = Array.from(counts.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 4);
+          const maxCount = sortedCounts[0][1] || 1;
+
+          const block = document.createElement('div');
+          block.className = 'gh-contrib-block';
+
+          const title = document.createElement('p');
+          title.className = 'gh-contrib-title';
+          title.textContent = 'Contribution Breakdown (Recent Fetched Activity)';
+          block.appendChild(title);
+
+          sortedCounts.forEach(([repoName, count]) => {
+            const row = document.createElement('div');
+            row.className = 'gh-bar-row';
+
+            const nameEl = document.createElement('span');
+            nameEl.className = 'gh-bar-name';
+            nameEl.textContent = repoName;
+
+            const countEl = document.createElement('span');
+            countEl.className = 'gh-bar-count';
+            countEl.textContent = `${count} ${count === 1 ? 'entry' : 'entries'}`;
+
+            const track = document.createElement('div');
+            track.className = 'gh-bar-track';
+
+            const fill = document.createElement('div');
+            fill.className = 'gh-bar-fill';
+            fill.style.width = `${Math.max(12, Math.round((count / maxCount) * 100))}%`;
+
+            track.appendChild(fill);
+            row.append(nameEl, countEl, track);
+            block.appendChild(row);
+          });
+
+          ghContribBreakdown.appendChild(block);
+        }
+
+        ghActivityList.textContent = '';
+        if (activities.length === 0) {
+          const box = document.createElement('div');
+          box.className = 'gh-state-box';
+          const p = document.createElement('p');
+          p.textContent = 'No recent public activity returned by GitHub yet.';
+          box.appendChild(p);
+          ghActivityList.appendChild(box);
+          return;
+        }
+
+        activities.slice(0, 10).forEach((act) => {
+          const item = document.createElement('article');
+          item.className = 'gh-activity-item';
+
+          const link = document.createElement('a');
+          link.className = 'gh-activity-msg';
+          link.href = safeGitHubUrl(act.url);
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = act.title;
+
+          const meta = document.createElement('p');
+          meta.className = 'gh-activity-meta';
+
+          if (act.sha) {
+            const shaEl = document.createElement('span');
+            shaEl.className = 'gh-sha';
+            shaEl.textContent = act.sha;
+            meta.append(shaEl, document.createTextNode(` · ${act.repo} · ${formatRelativeTime(act.date)}`));
+          } else {
+            meta.textContent = `${act.kind} · ${act.repo} · ${formatRelativeTime(act.date)}`;
+          }
+
+          item.append(link, meta);
+          ghActivityList.appendChild(item);
+        });
+      }
+
+      function renderGitHubSuccess(payload) {
+        ghState.data = payload;
+        ghState.loaded = true;
+        ghRefreshBtn.disabled = false;
+        ghRefreshBtn.textContent = 'Refresh Data';
+
+        const repos = payload.repos || [];
+        const activities = payload.activities || [];
+        const totalStars = repos.reduce((sum, r) => sum + (Number(r.stargazers_count) || 0), 0);
+        const latestPush = repos.length > 0 ? repos[0].pushed_at : payload.profile?.updated_at;
+
+        ghStatRepos.textContent = String(payload.profile?.public_repos ?? repos.length);
+        ghStatContribs.textContent = String(activities.length);
+        ghStatStars.textContent = String(totalStars);
+        ghStatLatest.textContent = formatShortDate(latestPush);
+        ghSyncLabel.textContent = `Synced ${formatRelativeTime(payload.fetchedAt)}`;
+
+        renderReposList();
+        renderActivityFeed();
+      }
+
+      function normalizePublicEvents(events) {
+        if (!Array.isArray(events)) return [];
+        const items = [];
+        events.forEach((ev) => {
+          const repoFull = ev.repo?.name || `${GH_USER}`;
+          const repoShort = repoFull.includes('/') ? repoFull.split('/')[1] : repoFull;
+          const repoUrl = `https://github.com/${repoFull}`;
+
+          if (ev.type === 'PushEvent') {
+            const commits = Array.isArray(ev.payload?.commits) ? ev.payload.commits : [];
+            if (commits.length > 0) {
+              commits.slice(0, 3).forEach((c) => {
+                const shortSha = (c.sha || '').slice(0, 7);
+                items.push({
+                  id: `commit-${c.sha || ev.id}`,
+                  kind: 'Commit',
+                  sha: shortSha,
+                  title: (c.message || 'Pushed commit').split('\n')[0],
+                  repo: repoShort,
+                  date: ev.created_at,
+                  url: c.sha ? `${repoUrl}/commit/${c.sha}` : repoUrl,
+                });
+              });
+            } else {
+              const count = ev.payload?.size || 1;
+              items.push({
+                id: `push-${ev.id}`,
+                kind: 'Push',
+                sha: '',
+                title: `Pushed ${count} ${count === 1 ? 'commit' : 'commits'} to ${repoShort}`,
+                repo: repoShort,
+                date: ev.created_at,
+                url: repoUrl,
+              });
+            }
+          } else if (ev.type === 'CreateEvent') {
+            const refType = ev.payload?.ref_type || 'repository';
+            const refName = ev.payload?.ref ? ` (${ev.payload.ref})` : '';
+            items.push({
+              id: `create-${ev.id}`,
+              kind: 'Created',
+              sha: '',
+              title: `Created ${refType}${refName} in ${repoShort}`,
+              repo: repoShort,
+              date: ev.created_at,
+              url: repoUrl,
+            });
+          } else if (ev.type === 'PullRequestEvent') {
+            const action = ev.payload?.action || 'updated';
+            const prTitle = ev.payload?.pull_request?.title || `pull request in ${repoShort}`;
+            items.push({
+              id: `pr-${ev.id}`,
+              kind: 'Pull Request',
+              sha: '',
+              title: `${action.charAt(0).toUpperCase() + action.slice(1)} PR: ${prTitle}`,
+              repo: repoShort,
+              date: ev.created_at,
+              url: ev.payload?.pull_request?.html_url || repoUrl,
+            });
+          } else if (ev.type === 'IssuesEvent') {
+            const action = ev.payload?.action || 'updated';
+            const issueTitle = ev.payload?.issue?.title || `issue in ${repoShort}`;
+            items.push({
+              id: `issue-${ev.id}`,
+              kind: 'Issue',
+              sha: '',
+              title: `${action.charAt(0).toUpperCase() + action.slice(1)} issue: ${issueTitle}`,
+              repo: repoShort,
+              date: ev.created_at,
+              url: ev.payload?.issue?.html_url || repoUrl,
+            });
+          } else if (ev.type === 'ForkEvent') {
+            items.push({
+              id: `fork-${ev.id}`,
+              kind: 'Fork',
+              sha: '',
+              title: `Forked ${repoFull}`,
+              repo: repoShort,
+              date: ev.created_at,
+              url: ev.payload?.forkee?.html_url || repoUrl,
+            });
+          } else if (ev.type === 'WatchEvent') {
+            items.push({
+              id: `star-${ev.id}`,
+              kind: 'Starred',
+              sha: '',
+              title: `Starred ${repoFull}`,
+              repo: repoShort,
+              date: ev.created_at,
+              url: repoUrl,
+            });
+          }
+        });
+        return items;
+      }
+
+      async function loadGitHubData(forceRefresh = false) {
+        if (ghState.loading) return;
+
+        if (!forceRefresh) {
+          try {
+            const cachedRaw = sessionStorage.getItem(GH_CACHE_KEY);
+            if (cachedRaw) {
+              const cached = JSON.parse(cachedRaw);
+              if (cached && cached.fetchedAt && Date.now() - new Date(cached.fetchedAt).getTime() < GH_CACHE_TTL_MS) {
+                renderGitHubSuccess(cached);
+                return;
+              }
+            }
+          } catch (_) {}
+        }
+
+        ghState.loading = true;
+        renderGitHubLoading();
+
+        try {
+          const [profileRes, reposRes, eventsRes] = await Promise.all([
+            fetch(`https://api.github.com/users/${GH_USER}`, { headers: GH_HEADERS }),
+            fetch(`https://api.github.com/users/${GH_USER}/repos?sort=pushed&direction=desc&per_page=10`, { headers: GH_HEADERS }),
+            fetch(`https://api.github.com/users/${GH_USER}/events/public?per_page=20`, { headers: GH_HEADERS }),
+          ]);
+
+          if (profileRes.status === 403 || reposRes.status === 403) {
+            throw new Error('GitHub public API hourly rate limit reached. Try again shortly or open the profile directly.');
+          }
+          if (!profileRes.ok || !reposRes.ok) {
+            throw new Error('Could not reach the GitHub API right now. Please retry in a moment.');
+          }
+
+          const profile = await profileRes.json();
+          const repos = await reposRes.json();
+          const rawEvents = eventsRes.ok ? await eventsRes.json() : [];
+
+          let activities = normalizePublicEvents(rawEvents);
+
+          // Enrich with real recent commits from top pushed repositories when public events are sparse
+          if (activities.length < 6 && Array.isArray(repos) && repos.length > 0) {
+            const topRepos = repos.slice(0, 3);
+            const commitResults = await Promise.allSettled(
+              topRepos.map(async (repo) => {
+                const res = await fetch(
+                  `https://api.github.com/repos/${GH_USER}/${encodeURIComponent(repo.name)}/commits?per_page=5`,
+                  { headers: GH_HEADERS }
+                );
+                if (!res.ok) return [];
+                const commits = await res.json();
+                if (!Array.isArray(commits)) return [];
+                return commits.map((c) => ({
+                  id: `commit-${c.sha}`,
+                  kind: 'Commit',
+                  sha: (c.sha || '').slice(0, 7),
+                  title: (c.commit?.message || 'Repository commit').split('\n')[0],
+                  repo: repo.name,
+                  date: c.commit?.author?.date || c.commit?.committer?.date || repo.pushed_at,
+                  url: c.html_url || repo.html_url,
+                }));
+              })
+            );
+
+            const seen = new Set(activities.map((a) => a.id));
+            commitResults.forEach((result) => {
+              if (result.status === 'fulfilled') {
+                result.value.forEach((item) => {
+                  if (!seen.has(item.id)) {
+                    seen.add(item.id);
+                    activities.push(item);
+                  }
+                });
+              }
+            });
+          }
+
+          activities.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+          const payload = {
+            fetchedAt: new Date().toISOString(),
+            profile: {
+              login: profile.login,
+              public_repos: profile.public_repos,
+              followers: profile.followers,
+              updated_at: profile.updated_at,
+            },
+            repos: Array.isArray(repos)
+              ? repos.map((r) => ({
+                  name: r.name,
+                  description: r.description,
+                  html_url: r.html_url,
+                  language: r.language,
+                  stargazers_count: r.stargazers_count,
+                  forks_count: r.forks_count,
+                  pushed_at: r.pushed_at,
+                  fork: r.fork,
+                }))
+              : [],
+            activities: activities.slice(0, 15),
+          };
+
+          try {
+            sessionStorage.setItem(GH_CACHE_KEY, JSON.stringify(payload));
+          } catch (_) {}
+
+          renderGitHubSuccess(payload);
+        } catch (err) {
+          renderGitHubError(err?.message || 'Unable to load live GitHub data right now.');
+        } finally {
+          ghState.loading = false;
+        }
+      }
+
+      function ensureGitHubLoaded() {
+        if (!ghState.loaded && !ghState.loading) {
+          loadGitHubData(false);
+        }
+      }
+
+      ghRefreshBtn.addEventListener('click', () => loadGitHubData(true));
+
+      ghFilterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          ghState.repoFilter = btn.dataset.ghFilter;
+          ghFilterButtons.forEach((b) => b.classList.toggle('is-active', b === btn));
+          renderReposList();
+        });
+      });
+
+      // ── 5. CONTACT COPY EMAIL UTILITY ────────────────────────────────────────
+      const copyEmailBtn = document.getElementById('copy-email-btn');
+      let copyResetTimer = null;
+
+      copyEmailBtn.addEventListener('click', async () => {
+        const email = 'samuelcoker784@gmail.com';
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(email);
+          } else {
+            const helper = document.createElement('textarea');
+            helper.value = email;
+            helper.setAttribute('readonly', '');
+            helper.style.position = 'fixed';
+            helper.style.opacity = '0';
+            document.body.appendChild(helper);
+            helper.select();
+            document.execCommand('copy');
+            document.body.removeChild(helper);
+          }
+          copyEmailBtn.textContent = 'Email Copied ✓';
+          clearTimeout(copyResetTimer);
+          copyResetTimer = setTimeout(() => {
+            copyEmailBtn.textContent = 'Copy Email Address';
+          }, 2400);
+        } catch (_) {
+          copyEmailBtn.textContent = email;
+        }
+      });
+
+      // ── 6. PERSISTENT WARM AMBER-ORANGE STARFIELD ────────────────────────────
       const canvas = document.getElementById('star-canvas');
       const ctx = canvas.getContext('2d');
-      let W, H, stars, shooters;
+      let W = 0;
+      let H = 0;
+      let stars = [];
+      let shooters = [];
 
-      // Star layers: [count, speed, size, opacity]
       const LAYERS = [
-        { count: 180, speed: 0.04, size: 0.9, opacity: 0.5 },
-        { count: 100, speed: 0.09, size: 1.4, opacity: 0.7 },
-        { count: 40,  speed: 0.18, size: 2.0, opacity: 0.9 },
+        { count: 170, speed: 0.04, size: 0.9, opacity: 0.48 },
+        { count: 95,  speed: 0.085, size: 1.35, opacity: 0.68 },
+        { count: 38,  speed: 0.16, size: 1.9, opacity: 0.88 },
       ];
 
-      function resize() {
-        W = canvas.width  = window.innerWidth;
+      // Warm ivory, pale amber, and soft solar-orange tints
+      const STAR_PALETTE = [
+        [255, 240, 224],
+        [255, 200, 138],
+        [255, 146, 84],
+      ];
+
+      function resizeCanvas() {
+        W = canvas.width = window.innerWidth;
         H = canvas.height = window.innerHeight;
       }
 
@@ -1117,53 +3108,52 @@
         return {
           x: Math.random() * W,
           y: Math.random() * H,
-          size: layer.size + Math.random() * 0.6,
-          speed: layer.speed + Math.random() * 0.05,
+          size: layer.size + Math.random() * 0.55,
+          speed: layer.speed + Math.random() * 0.045,
           opacity: layer.opacity * (0.6 + Math.random() * 0.4),
           twinkle: Math.random() * Math.PI * 2,
           twinkleSpeed: 0.008 + Math.random() * 0.015,
-          // subtle color tint: white, pale purple, pale cyan
-          hue: [255, 220, 200][Math.floor(Math.random() * 3)],
+          rgb: STAR_PALETTE[Math.floor(Math.random() * STAR_PALETTE.length)],
         };
       }
 
       function makeShooter() {
-        const angle = Math.PI / 6 + Math.random() * Math.PI / 6;
+        const angle = Math.PI / 6 + Math.random() * (Math.PI / 6);
         return {
           x: Math.random() * W,
           y: Math.random() * H * 0.4,
-          len: 80 + Math.random() * 120,
-          speed: 8 + Math.random() * 6,
-          angle,
+          len: 80 + Math.random() * 115,
+          speed: 7.5 + Math.random() * 5.5,
           dx: Math.cos(angle),
           dy: Math.sin(angle),
           life: 0,
           maxLife: 40 + Math.random() * 20,
           active: false,
-          timer: Math.random() * 400,
+          timer: Math.random() * 420,
         };
       }
 
-      function init() {
-        resize();
-        stars = LAYERS.flatMap(l => Array.from({ length: l.count }, () => makeStar(l)));
+      function initStars() {
+        resizeCanvas();
+        stars = LAYERS.flatMap((l) => Array.from({ length: l.count }, () => makeStar(l)));
         shooters = Array.from({ length: 4 }, makeShooter);
       }
 
-      function draw() {
+      function drawStars(singleFrame = false) {
         ctx.clearRect(0, 0, W, H);
 
-        // Stars
-        stars.forEach(s => {
-          s.twinkle += s.twinkleSpeed;
-          s.y += s.speed;
-          if (s.y > H + 2) { s.y = -2; s.x = Math.random() * W; }
+        stars.forEach((s) => {
+          if (!singleFrame) {
+            s.twinkle += s.twinkleSpeed;
+            s.y += s.speed;
+            if (s.y > H + 2) {
+              s.y = -2;
+              s.x = Math.random() * W;
+            }
+          }
 
           const alpha = s.opacity * (0.75 + 0.25 * Math.sin(s.twinkle));
-          const r = s.hue === 255 ? 220 : s.hue === 220 ? 180 : 160;
-          const g = s.hue === 255 ? 220 : s.hue === 220 ? 160 : 230;
-          const b = s.hue === 255 ? 255 : s.hue === 220 ? 255 : 255;
-
+          const [r, g, b] = s.rgb;
           const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 2);
           grad.addColorStop(0, `rgba(${r},${g},${b},${alpha})`);
           grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
@@ -1173,52 +3163,57 @@
           ctx.fill();
         });
 
-        // Shooting stars
-        shooters.forEach(s => {
-          if (!s.active) {
-            s.timer--;
-            if (s.timer <= 0) {
-              s.active = true;
-              s.x = Math.random() * W;
-              s.y = Math.random() * H * 0.35;
-              s.life = 0;
-              s.timer = 200 + Math.random() * 400;
+        if (!singleFrame) {
+          shooters.forEach((s) => {
+            if (!s.active) {
+              s.timer--;
+              if (s.timer <= 0) {
+                s.active = true;
+                s.x = Math.random() * W;
+                s.y = Math.random() * H * 0.35;
+                s.life = 0;
+                s.timer = 220 + Math.random() * 420;
+              }
+              return;
             }
-            return;
-          }
 
-          s.life++;
-          s.x += s.dx * s.speed;
-          s.y += s.dy * s.speed;
+            s.life++;
+            s.x += s.dx * s.speed;
+            s.y += s.dy * s.speed;
 
-          const progress = s.life / s.maxLife;
-          const alpha = progress < 0.2 ? progress / 0.2 : 1 - (progress - 0.2) / 0.8;
+            const progress = s.life / s.maxLife;
+            const alpha = progress < 0.2 ? progress / 0.2 : 1 - (progress - 0.2) / 0.8;
+            const tailX = s.x - s.dx * s.len;
+            const tailY = s.y - s.dy * s.len;
 
-          const tailX = s.x - s.dx * s.len;
-          const tailY = s.y - s.dy * s.len;
-          const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
-          grad.addColorStop(0, `rgba(155,48,255,0)`);
-          grad.addColorStop(0.5, `rgba(200,140,255,${alpha * 0.4})`);
-          grad.addColorStop(1, `rgba(255,255,255,${alpha})`);
+            const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
+            grad.addColorStop(0, 'rgba(255, 106, 26, 0)');
+            grad.addColorStop(0.55, `rgba(255, 179, 71, ${alpha * 0.48})`);
+            grad.addColorStop(1, `rgba(255, 244, 232, ${alpha})`);
 
-          ctx.beginPath();
-          ctx.moveTo(tailX, tailY);
-          ctx.lineTo(s.x, s.y);
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(tailX, tailY);
+            ctx.lineTo(s.x, s.y);
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
 
-          if (s.life >= s.maxLife || s.x > W + 100 || s.y > H + 100) {
-            s.active = false;
-          }
-        });
+            if (s.life >= s.maxLife || s.x > W + 100 || s.y > H + 100) {
+              s.active = false;
+            }
+          });
 
-        requestAnimationFrame(draw);
+          requestAnimationFrame(() => drawStars(false));
+        }
       }
 
-      window.addEventListener('resize', () => { resize(); });
-      init();
-      draw();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Boot everything
+      initStars();
+      drawStars(prefersReducedMotion);
+      renderRoute(parseRouteFromHash(), true);
+      playIntro(false);
     })();
   </script>
 
